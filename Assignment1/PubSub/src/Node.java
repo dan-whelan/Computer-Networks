@@ -1,3 +1,7 @@
+/**
+ * Node class taken from example code given by Lecturer of Computer Networks Module:
+ * @author Stefan Weber
+ */
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.SocketException;
