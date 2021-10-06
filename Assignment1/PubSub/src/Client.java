@@ -15,9 +15,19 @@ import java.io.FileInputStream;
  *
  */
 public class Client extends Node {
-	static final int DEFAULT_SRC_PORT = 50000;
+	static final int DEFAULT_SRC_PORT = 50002;
 	static final int DEFAULT_DST_PORT = 50001;
-	static final String DEFAULT_DST_NODE = "server";
+	static final String DEFAULT_DST_NODE = "broker";
+	static final int HEADER_LENGTH = 2;
+	static final int TYPE_POS = 0;
+	static final int LENGTH_POS = 1;
+	static final byte ACK = 3;
+	static final byte CONNECT_ACK = 5;
+	static final int ACKCODE = 1;
+	static final byte ACKPACKET = 10;
+	static final byte BROKER = 1;
+	static final byte CLIENT = 2;
+	
 	InetSocketAddress dstAddress;
 
 	/**

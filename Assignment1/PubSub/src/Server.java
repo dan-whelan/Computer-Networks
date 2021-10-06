@@ -2,7 +2,7 @@ import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 
 public class Server extends Node {
-	static final int DEFAULT_PORT = 50001;
+	static final int DEFAULT_PORT = 50000;
 	/*
 	 *
 	 */
