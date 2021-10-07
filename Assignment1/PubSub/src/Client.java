@@ -1,11 +1,10 @@
 /**
- *
+ * Adapted from sample client code given by Lecturer Stefan Weber
  */
 import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
-import java.io.File;
-import java.io.FileInputStream;
+import java.util.Random;
 
 /**
  *
@@ -18,16 +17,20 @@ public class Client extends Node {
 	static final int DEFAULT_SRC_PORT = 50002;
 	static final int DEFAULT_DST_PORT = 50001;
 	static final String DEFAULT_DST_NODE = "broker";
+
 	static final int HEADER_LENGTH = 2;
-	static final int TYPE_POS = 0;
-	static final int LENGTH_POS = 1;
-	static final byte ACK = 3;
-	static final byte CONNECT_ACK = 5;
+	static final int TYPE = 0;
+	static final int MESSAGE_LENGTH = 1;
+
 	static final int ACKCODE = 1;
 	static final byte ACKPACKET = 10;
+
 	static final byte BROKER = 1;
 	static final byte CLIENT = 2;
-	
+	static final byte ACK = 3;
+
+	static final int UPPER_LIMIT = 1000;
+
 	InetSocketAddress dstAddress;
 
 	/**
@@ -41,7 +44,9 @@ public class Client extends Node {
 			socket= new DatagramSocket(srcPort);
 			listener.go();
 		}
-		catch(java.lang.Exception e) {e.printStackTrace();}
+		catch(java.lang.Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -49,10 +54,25 @@ public class Client extends Node {
 	 * Assume that incoming packets contain a String and print the string.
 	 */
 	public synchronized void onReceipt(DatagramPacket packet) {
-		PacketContent content= PacketContent.fromDatagramPacket(packet);
-
-		System.out.println(content.toString());
-		this.notify();
+		try{
+			byte[] data;
+			String content;
+			data = packet.getData();
+			switch(data[TYPE]) {
+				case ACK:
+					System.out.println("Packet Received by Broker");
+					break;
+				case BROKER:
+					content = sendAck(packet,data);
+					System.out.println("Broker says: " + content);
+					break;
+				default:
+					System.err.println("Error: Unexpected packet received");
+					break;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 
@@ -60,40 +80,40 @@ public class Client extends Node {
 	 * Sender Method
 	 *
 	 */
-	public synchronized void start() throws Exception {
-		String fname;
-		File file= null;
-		FileInputStream fin= null;
-
-		FileInfoContent fcontent;
-
-		int size;
-		byte[] buffer= null;
-		DatagramPacket packet= null;
-
-		fname= "message.txt";//terminal.readString("Name of file: ");
-
-		file= new File(fname);				// Reserve buffer for length of file and read file
-		buffer= new byte[(int) file.length()];
-		fin= new FileInputStream(file);
-		size= fin.read(buffer);
-		if (size==-1) {
-			fin.close();
-			throw new Exception("Problem with File Access:"+fname);
+	public synchronized void start(String content) {
+		try {
+			byte[] data = new byte[HEADER_LENGTH + content.length()];
+			data[TYPE] = BROKER;
+			data[MESSAGE_LENGTH] = (byte) content.length();
+			System.arraycopy(content, 0 , data, HEADER_LENGTH, content.length());
+			DatagramPacket packet = new DatagramPacket(data, data.length);
+			packet.setSocketAddress(dstAddress);
+			socket.send(packet);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		System.out.println("File size: " + buffer.length);
 
-		fcontent= new FileInfoContent(fname, size);
-
-		System.out.println("Sending packet w/ name & length"); // Send packet with file name and length
-		packet= fcontent.toDatagramPacket();
-		packet.setSocketAddress(dstAddress);
-		socket.send(packet);
-		System.out.println("Packet sent");
-		this.wait();
-		fin.close();
 	}
 
+	public String sendAck(DatagramPacket packet, byte[] data) {
+		try{
+            String content;
+            DatagramPacket response;
+            byte[] buffer = new byte[data[MESSAGE_LENGTH]];
+            System.arraycopy(data, HEADER_LENGTH, buffer, 0, MESSAGE_LENGTH);
+            content = new String(buffer);
+            data = new byte[HEADER_LENGTH];
+            data[TYPE] = ACK;
+            data[ACKCODE] = ACKPACKET;
+            response = new DatagramPacket(data, data.length);
+            response.setSocketAddress(packet.getSocketAddress());
+            socket.send(response);
+            return content;
+        } catch(Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+	}
 
 	/**
 	 * Test method
@@ -102,7 +122,10 @@ public class Client extends Node {
 	 */
 	public static void main(String[] args) {
 		try {
-			(new Client(DEFAULT_DST_NODE, DEFAULT_DST_PORT, DEFAULT_SRC_PORT)).start();
+			Random generator = new Random();
+			int measurement = generator.nextInt(UPPER_LIMIT);
+			String content = String.valueOf(measurement);
+			(new Client(DEFAULT_DST_NODE, DEFAULT_DST_PORT, DEFAULT_SRC_PORT)).start(content);
 			System.out.println("Program completed");
 		} catch(java.lang.Exception e) {e.printStackTrace();}
 	}

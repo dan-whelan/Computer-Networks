@@ -62,7 +62,8 @@ public class Broker extends Node {
                     sendPacket(SERVER, content);
                     break;
                 default:
-                    System.err.println("Error: Unexpected packet received");
+                   System.err.println("Error: Unexpected packet received");
+                   break;
             }
         } catch(Exception e){
             e.printStackTrace();
