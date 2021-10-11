@@ -10,6 +10,7 @@ import java.net.SocketAddress;
 public class Broker extends Node {
     static final int BROKER_PORT = 50001;
     static final int SERVER_PORT = 50000;
+    static final int SUBSCRIBER_PORT = 50005;
 
     static final int HEADER_LENGTH = 2;
     static final int TYPE = 0;
@@ -21,13 +22,13 @@ public class Broker extends Node {
     static final byte SERVER = 3;
     static final byte ACK = 4;
     static final byte SUBSCRIBER = 5;
+    static final byte BROKER_SUBSCRIBER = 6;
 
     static final byte ACKPACKET = 10;
     static final int ACKCODE = 1;
 
-    private SocketAddress serverAddress;
-
-    InetSocketAddress dstAddress;
+    private InetSocketAddress serverAddress = new InetSocketAddress("server", SERVER_PORT);
+    private InetSocketAddress subscriberAddress = new InetSocketAddress("subscriber", SUBSCRIBER_PORT);
 
     Broker(int port) {
         try {
@@ -37,9 +38,7 @@ public class Broker extends Node {
             e.printStackTrace();
         }
     }
-    /**
-     * 
-     */
+
     public synchronized void onReceipt(DatagramPacket packet) {
         try {
             byte[] data;
@@ -47,19 +46,19 @@ public class Broker extends Node {
             data = packet.getData();
             switch(data[TYPE]) { 
                 case ACK:
-                    System.out.print("Packet recieved by Receiver");
+                    System.out.print("Packet recieved");
                     break;
                 case CLIENT:
                     content = sendAck(packet, data);
-                    sendPacket(SERVER, content);
+                    sendPacket(SERVER, content, serverAddress);
                     break;
                 case SERVER:
                     content = sendAck(packet, data);
-                    sendPacket(SUBSCRIBER, content);
+                    sendPacket(SUBSCRIBER, content, subscriberAddress);
                     break;
                 case SUBSCRIBER:
                     content = sendAck(packet, data);
-                    sendPacket(SERVER, content);
+                    sendPacket(BROKER_SUBSCRIBER, content, serverAddress);
                     break;
                 default:
                    System.err.println("Error: Unexpected packet received");
@@ -100,16 +99,16 @@ public class Broker extends Node {
       * @param type location packet is being sent to 
       * @param content content to be contained within the packet
       */
-    private void sendPacket(int type, String content) {
+    private void sendPacket(int type, String content, InetSocketAddress dstAddress){
         try {
             switch(type) {
                 case SERVER:
                     byte[] data = new byte[HEADER_LENGTH + content.length()];
                     data[TYPE] = BROKER;
                     data[MESSAGE_LENGTH] = (byte) content.length();
-                    System.arraycopy(content, 0, data, HEADER_LENGTH, content.length());
+                    System.arraycopy(content.getBytes(), 0, data, HEADER_LENGTH, content.length());
                     DatagramPacket packet = new DatagramPacket(data, data.length);
-                    packet.setSocketAddress(serverAddress);
+                    packet.setSocketAddress(dstAddress);
                     socket.send(packet);
                     break;
                 case SUBSCRIBER:
@@ -123,9 +122,8 @@ public class Broker extends Node {
         }
     }
 
-    private void start() {
+    private synchronized void start() {
         try {
-            System.out.println("Waiting for contact...");
             this.wait();
         } catch(Exception e) {
             e.printStackTrace();
@@ -135,6 +133,7 @@ public class Broker extends Node {
     public static void main(String[] args) {
         try {
             Broker broker = new Broker(BROKER_PORT);
+            System.out.println("Waiting for Contact...");
             broker.start();
         } catch(Exception e) {
             e.printStackTrace();

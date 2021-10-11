@@ -7,11 +7,7 @@ import java.net.InetSocketAddress;
 import java.util.Random;
 
 /**
- *
  * Client class
- *
- * An instance accepts user input
- *
  */
 public class Client extends Node {
 	static final int DEFAULT_SRC_PORT = 50002;
@@ -22,12 +18,13 @@ public class Client extends Node {
 	static final int TYPE = 0;
 	static final int MESSAGE_LENGTH = 1;
 
-	static final int ACKCODE = 1;
+	static final byte ACKCODE = 1;
 	static final byte ACKPACKET = 10;
 
 	static final byte BROKER = 1;
 	static final byte CLIENT = 2;
-	static final byte ACK = 3;
+	static final byte SERVER = 3;
+	static final byte ACK = 4;
 
 	static final int UPPER_LIMIT = 1000;
 
@@ -35,9 +32,7 @@ public class Client extends Node {
 
 	/**
 	 * Constructor
-	 *
-	 * Attempts to create socket at given port and create an InetSocketAddress for the destinations
-	 */
+	*/
 	Client(String dstHost, int dstPort, int srcPort) {
 		try {
 			dstAddress= new InetSocketAddress(dstHost, dstPort);
@@ -49,10 +44,6 @@ public class Client extends Node {
 		}
 	}
 
-
-	/**
-	 * Assume that incoming packets contain a String and print the string.
-	 */
 	public synchronized void onReceipt(DatagramPacket packet) {
 		try{
 			byte[] data;
@@ -75,20 +66,16 @@ public class Client extends Node {
 		}
 	}
 
-
-	/**
-	 * Sender Method
-	 *
-	 */
 	public synchronized void start(String content) {
 		try {
 			byte[] data = new byte[HEADER_LENGTH + content.length()];
-			data[TYPE] = BROKER;
+			data[TYPE] = CLIENT;
 			data[MESSAGE_LENGTH] = (byte) content.length();
-			System.arraycopy(content, 0 , data, HEADER_LENGTH, content.length());
+			System.arraycopy(content.getBytes(), 0 , data, HEADER_LENGTH, content.length());
 			DatagramPacket packet = new DatagramPacket(data, data.length);
 			packet.setSocketAddress(dstAddress);
 			socket.send(packet);
+			this.wait();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
