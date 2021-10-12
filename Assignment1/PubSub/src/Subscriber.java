@@ -88,7 +88,7 @@ public class Subscriber extends Node {
             byte[] data = new byte[HEADER_LENGTH + response.length()];
             data[TYPE] = SUBSCRIBER;
             data[MESSAGE_LENGTH] = (byte) response.length();
-            System.arraycopy(response, 0, data, HEADER_LENGTH, response.length());
+            System.arraycopy(response.getBytes(), 0, data, HEADER_LENGTH, response.length());
             DatagramPacket packet = new DatagramPacket(data, data.length);
             packet.setSocketAddress(dstAddress);
             socket.send(packet);

@@ -50,11 +50,11 @@ public class Broker extends Node {
                     break;
                 case CLIENT:
                     content = sendAck(packet, data);
-                    sendPacket(SERVER, content, serverAddress);
+                    sendPacket(BROKER, content, serverAddress);
                     break;
                 case SERVER:
                     content = sendAck(packet, data);
-                    sendPacket(SUBSCRIBER, content, subscriberAddress);
+                    sendPacket(BROKER, content, subscriberAddress);
                     break;
                 case SUBSCRIBER:
                     content = sendAck(packet, data);
@@ -102,7 +102,7 @@ public class Broker extends Node {
     private void sendPacket(int type, String content, InetSocketAddress dstAddress){
         try {
             switch(type) {
-                case SERVER:
+                case BROKER:
                     byte[] data = new byte[HEADER_LENGTH + content.length()];
                     data[TYPE] = BROKER;
                     data[MESSAGE_LENGTH] = (byte) content.length();

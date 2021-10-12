@@ -11,7 +11,8 @@ import java.net.InetSocketAddress;
 public class Server extends Node {
 	static final int DEFAULT_SRC_PORT = 50000;
 	static final int DEFAULT_DST_PORT = 50001;
-	static final String DEFAULT_DST_NODE = "broker";
+
+	static final String BROKER_NAME = "broker";
 
 	static final int HEADER_LENGTH = 2;
 	static final int TYPE = 0;
@@ -26,11 +27,10 @@ public class Server extends Node {
 	static final byte ACK = 4;
 	static final byte BROKER_SUBSCRIBER = 6;
 
-	InetSocketAddress dstAddress;
+	InetSocketAddress dstAddress = new InetSocketAddress(BROKER_NAME, DEFAULT_DST_PORT);
 
-	Server(String dstHost, int dstPort, int srcPort) {
+	Server(int srcPort) {
 		try {
-			dstAddress = new InetSocketAddress(dstHost, dstPort);
 			socket= new DatagramSocket(srcPort);
 			listener.go();
 		}
@@ -98,7 +98,7 @@ public class Server extends Node {
 			byte[] data = new byte[HEADER_LENGTH + response.length()];
 			data[TYPE] = SERVER;
 			data[MESSAGE_LENGTH] = (byte) response.length();
-			System.arraycopy(response, 0 , data, HEADER_LENGTH, response.length());
+			System.arraycopy(response.getBytes(), 0 , data, HEADER_LENGTH, response.length());
 			DatagramPacket packet = new DatagramPacket(data, data.length);
 			packet.setSocketAddress(dstAddress);
 			socket.send(packet);
@@ -119,7 +119,7 @@ public class Server extends Node {
 
 	public static void main(String[] args) {
 		try {
-			(new Server(DEFAULT_DST_NODE,DEFAULT_DST_PORT,DEFAULT_SRC_PORT)).start();
+			(new Server(DEFAULT_SRC_PORT)).start();
 		} catch(java.lang.Exception e) {
 			e.printStackTrace();
 		}
