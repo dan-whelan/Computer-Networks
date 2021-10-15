@@ -26,7 +26,7 @@ public class Client extends Node {
 	static final byte SERVER = 3;
 	static final byte ACK = 4;
 
-	static final int UPPER_LIMIT = 1000;
+	static final int UPPER_LIMIT = 30;
 
 	InetSocketAddress dstAddress;
 

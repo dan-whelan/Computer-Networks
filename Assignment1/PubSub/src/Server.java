@@ -27,6 +27,8 @@ public class Server extends Node {
 	static final byte ACK = 4;
 	static final byte BROKER_SUBSCRIBER = 6;
 
+	static final int UPPER_CHLORINE_LIMIT = 15;
+
 	InetSocketAddress dstAddress = new InetSocketAddress(BROKER_NAME, DEFAULT_DST_PORT);
 
 	Server(int srcPort) {
@@ -50,6 +52,7 @@ public class Server extends Node {
 					break;
 				case BROKER:
 					content = sendAck(packet,data);
+					System.out.println("Chlorine measurement is: " + content);
 					sendResponse(content);
 					break;
 				case BROKER_SUBSCRIBER:
@@ -70,7 +73,7 @@ public class Server extends Node {
             String content;
             DatagramPacket response;
             byte[] buffer = new byte[data[MESSAGE_LENGTH]];
-            System.arraycopy(data, HEADER_LENGTH, buffer, 0, MESSAGE_LENGTH);
+            System.arraycopy(data, HEADER_LENGTH, buffer, 0, data[MESSAGE_LENGTH]);
             content = new String(buffer);
             data = new byte[HEADER_LENGTH];
             data[TYPE] = ACK;
@@ -86,14 +89,14 @@ public class Server extends Node {
 	}
 
 	public void sendResponse(String content){
-		//int measurement = Integer.parseInt(content);
-		String response = "Reduce Chlorine Levels";
-		// if(measurement <= 200) {
-		// 	response = "Continue as normal";
-		// }
-		// else {
-		// 	response = "Reduce Chlorine Levels";
-		// }
+		int measurement = Integer.parseInt(content);
+		String response = "";
+		if(measurement <= UPPER_CHLORINE_LIMIT) {
+			response = "Continue as normal";
+		}
+		else {
+			response = "Reduce Chlorine Levels";
+		}
 		try {
 			byte[] data = new byte[HEADER_LENGTH + response.length()];
 			data[TYPE] = SERVER;

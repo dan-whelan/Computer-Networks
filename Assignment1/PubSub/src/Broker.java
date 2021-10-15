@@ -46,7 +46,7 @@ public class Broker extends Node {
             data = packet.getData();
             switch(data[TYPE]) { 
                 case ACK:
-                    System.out.print("Packet recieved");
+                    System.out.println("Packet recieved");
                     break;
                 case CLIENT:
                     content = sendAck(packet, data);
@@ -80,7 +80,7 @@ public class Broker extends Node {
             String content;
             DatagramPacket response;
             byte[] buffer = new byte[data[MESSAGE_LENGTH]];
-            System.arraycopy(data, HEADER_LENGTH, buffer, 0, MESSAGE_LENGTH);
+            System.arraycopy(data, HEADER_LENGTH, buffer, 0, data[MESSAGE_LENGTH]);
             content = new String(buffer);
             data = new byte[HEADER_LENGTH];
             data[TYPE] = ACK;
@@ -101,17 +101,26 @@ public class Broker extends Node {
       */
     private void sendPacket(int type, String content, InetSocketAddress dstAddress){
         try {
+            byte[] data;
+            DatagramPacket packet;
             switch(type) {
                 case BROKER:
-                    byte[] data = new byte[HEADER_LENGTH + content.length()];
+                    data = new byte[HEADER_LENGTH + content.length()];
                     data[TYPE] = BROKER;
                     data[MESSAGE_LENGTH] = (byte) content.length();
                     System.arraycopy(content.getBytes(), 0, data, HEADER_LENGTH, content.length());
-                    DatagramPacket packet = new DatagramPacket(data, data.length);
+                    packet = new DatagramPacket(data, data.length);
                     packet.setSocketAddress(dstAddress);
                     socket.send(packet);
                     break;
-                case SUBSCRIBER:
+                case BROKER_SUBSCRIBER:
+                    data = new byte[HEADER_LENGTH + content.length()];
+                    data[TYPE] = BROKER_SUBSCRIBER;
+                    data[MESSAGE_LENGTH] = (byte) content.length();
+                    System.arraycopy(content.getBytes(), 0, data, HEADER_LENGTH, content.length());
+                    packet = new DatagramPacket(data, data.length);
+                    packet.setSocketAddress(dstAddress);
+                    socket.send(packet); 
                     break;
                 default:
                     System.err.println("Error: invalid type");

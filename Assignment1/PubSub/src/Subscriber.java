@@ -62,7 +62,7 @@ public class Subscriber extends Node {
             String content;
             DatagramPacket response;
             byte[] buffer = new byte[data[MESSAGE_LENGTH]];
-            System.arraycopy(data, HEADER_LENGTH, buffer, 0, MESSAGE_LENGTH);
+            System.arraycopy(data, HEADER_LENGTH, buffer, 0, data[MESSAGE_LENGTH]);
             content = new String(buffer);
             data = new byte[HEADER_LENGTH];
             data[TYPE] = ACK;

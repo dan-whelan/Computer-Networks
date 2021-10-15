@@ -1,0 +1,300 @@
+[ 13547.685] 
+X.Org X Server 1.19.6
+Release Date: 2017-12-20
+[ 13547.690] X Protocol Version 11, Revision 0
+[ 13547.692] Build Operating System: Linux 4.15.0-140-generic aarch64 Ubuntu
+[ 13547.693] Current Operating System: Linux 6b54d6e3fb44 5.10.47-linuxkit #1 SMP PREEMPT Sat Jul 3 21:50:16 UTC 2021 aarch64
+[ 13547.695] Kernel command line: page_poison=1 vsyscall=emulate panic=1 nospec_store_bypass_disable noibrs noibpb no_stf_barrier mitigations=off   vpnkit.connect=tcp+bootstrap+client://192.168.65.2:60678/de6ab47b825361c01287d11d6771e52ac74b62b67c01364bdcf22ccb3fba1b9a console=ttyAMA0
+[ 13547.699] Build Date: 08 April 2021  01:53:49PM
+[ 13547.700] xorg-server 2:1.19.6-1ubuntu4.9 (For technical support please see http://www.ubuntu.com/support) 
+[ 13547.701] Current version of pixman: 0.34.0
+[ 13547.703] 	Before reporting problems, check http://wiki.x.org
+	to make sure that you have the latest version.
+[ 13547.704] Markers: (--) probed, (**) from config file, (==) default setting,
+	(++) from command line, (!!) notice, (II) informational,
+	(WW) warning, (EE) error, (NI) not implemented, (??) unknown.
+[ 13547.711] (++) Log file: ".xorgxrdp.10.log", Time: Fri Oct 15 21:27:43 2021
+[ 13547.713] (++) Using config file: "/etc/X11/xrdp/xorg.conf"
+[ 13547.714] (==) Using system config directory "/usr/share/X11/xorg.conf.d"
+[ 13547.716] (==) ServerLayout "X11 Server"
+[ 13547.717] (**) |-->Screen "Screen (xrdpdev)" (0)
+[ 13547.718] (**) |   |-->Monitor "Monitor"
+[ 13547.720] (**) |   |-->Device "Video Card (xrdpdev)"
+[ 13547.721] (**) |-->Input Device "xrdpMouse"
+[ 13547.722] (**) |-->Input Device "xrdpKeyboard"
+[ 13547.725] (**) Option "DontVTSwitch" "on"
+[ 13547.729] (**) Option "AutoAddDevices" "off"
+[ 13547.731] (**) Not automatically adding devices
+[ 13547.733] (==) Automatically enabling devices
+[ 13547.734] (==) Automatically adding GPU devices
+[ 13547.735] (==) Automatically binding GPU devices
+[ 13547.736] (==) Max clients allowed: 256, resource mask: 0x1fffff
+[ 13547.738] (WW) The directory "/usr/share/fonts/X11/cyrillic" does not exist.
+[ 13547.739] 	Entry deleted from font path.
+[ 13547.740] (WW) The directory "/usr/share/fonts/X11/100dpi/" does not exist.
+[ 13547.741] 	Entry deleted from font path.
+[ 13547.742] (WW) The directory "/usr/share/fonts/X11/75dpi/" does not exist.
+[ 13547.744] 	Entry deleted from font path.
+[ 13547.745] (WW) The directory "/usr/share/fonts/X11/Type1" does not exist.
+[ 13547.746] 	Entry deleted from font path.
+[ 13547.747] (WW) The directory "/usr/share/fonts/X11/100dpi" does not exist.
+[ 13547.748] 	Entry deleted from font path.
+[ 13547.749] (WW) The directory "/usr/share/fonts/X11/75dpi" does not exist.
+[ 13547.750] 	Entry deleted from font path.
+[ 13547.751] (==) FontPath set to:
+	/usr/share/fonts/X11/misc,
+	built-ins
+[ 13547.752] (==) ModulePath set to "/usr/lib/xorg/modules"
+[ 13547.754] (II) Loader magic: 0xaaaab8940010
+[ 13547.755] (II) Module ABI versions:
+[ 13547.756] 	X.Org ANSI C Emulation: 0.4
+[ 13547.758] 	X.Org Video Driver: 23.0
+[ 13547.759] 	X.Org XInput driver : 24.1
+[ 13547.760] 	X.Org Server Extension : 10.0
+[ 13547.761] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13547.763] (II) no primary bus or device found
+[ 13547.764] (II) "glx" will be loaded. This was enabled by default and also specified in the config file.
+[ 13547.766] (II) LoadModule: "dbe"
+[ 13547.767] (II) Module "dbe" already built-in
+[ 13547.768] (II) LoadModule: "ddc"
+[ 13547.770] (II) Module "ddc" already built-in
+[ 13547.771] (II) LoadModule: "extmod"
+[ 13547.773] (II) Module "extmod" already built-in
+[ 13547.774] (II) LoadModule: "glx"
+[ 13547.779] (II) Loading /usr/lib/xorg/modules/extensions/libglx.so
+[ 13547.784] (II) Module glx: vendor="X.Org Foundation"
+[ 13547.786] 	compiled for 1.19.6, module version = 1.0.0
+[ 13547.787] 	ABI class: X.Org Server Extension, version 10.0
+[ 13547.789] (II) LoadModule: "int10"
+[ 13547.791] (II) Loading /usr/lib/xorg/modules/libint10.so
+[ 13547.793] (II) Module int10: vendor="X.Org Foundation"
+[ 13547.794] 	compiled for 1.19.6, module version = 1.0.0
+[ 13547.796] 	ABI class: X.Org Video Driver, version 23.0
+[ 13547.797] (II) LoadModule: "record"
+[ 13547.799] (II) Module "record" already built-in
+[ 13547.800] (II) LoadModule: "vbe"
+[ 13547.802] (II) Loading /usr/lib/xorg/modules/libvbe.so
+[ 13547.803] (II) Module vbe: vendor="X.Org Foundation"
+[ 13547.804] 	compiled for 1.19.6, module version = 1.1.0
+[ 13547.806] 	ABI class: X.Org Video Driver, version 23.0
+[ 13547.807] (II) LoadModule: "xorgxrdp"
+[ 13547.813] (II) Loading /usr/lib/xorg/modules/libxorgxrdp.so
+[ 13547.814] (II) Module XORGXRDP: vendor="X.Org Foundation"
+[ 13547.815] 	compiled for 1.19.6, module version = 1.0.0
+[ 13547.816] 	ABI class: X.Org Video Driver, version 23.0
+[ 13547.818] xorgxrdpSetup:
+[ 13547.820] (II) LoadModule: "fb"
+[ 13547.821] (II) Loading /usr/lib/xorg/modules/libfb.so
+[ 13547.823] (II) Module fb: vendor="X.Org Foundation"
+[ 13547.824] 	compiled for 1.19.6, module version = 1.0.0
+[ 13547.825] 	ABI class: X.Org ANSI C Emulation, version 0.4
+[ 13547.827] (II) LoadModule: "xrdpdev"
+[ 13547.829] (II) Loading /usr/lib/xorg/modules/drivers/xrdpdev_drv.so
+[ 13547.830] (II) Module XRDPDEV: vendor="X.Org Foundation"
+[ 13547.831] 	compiled for 1.19.6, module version = 1.0.0
+[ 13547.833] 	ABI class: X.Org Video Driver, version 23.0
+[ 13547.834] xrdpdevSetup:
+[ 13547.836] (II) LoadModule: "xrdpmouse"
+[ 13547.838] (II) Loading /usr/lib/xorg/modules/input/xrdpmouse_drv.so
+[ 13547.839] (II) Module XRDPMOUSE: vendor="X.Org Foundation"
+[ 13547.840] 	compiled for 1.19.6, module version = 1.0.0
+[ 13547.842] 	Module class: X.Org XInput Driver
+[ 13547.844] 	ABI class: X.Org XInput driver, version 24.1
+[ 13547.845] rdpmousePlug:
+[ 13547.846] (II) LoadModule: "xrdpkeyb"
+[ 13547.848] (II) Loading /usr/lib/xorg/modules/input/xrdpkeyb_drv.so
+[ 13547.850] (II) Module XRDPKEYB: vendor="X.Org Foundation"
+[ 13547.851] 	compiled for 1.19.6, module version = 1.0.0
+[ 13547.854] 	Module class: X.Org XInput Driver
+[ 13547.855] 	ABI class: X.Org XInput driver, version 24.1
+[ 13547.857] rdpkeybPlug:
+[ 13547.859] rdpIdentify:
+[ 13547.861] (II) XRDPDEV: driver for xrdp: XRDPDEV
+[ 13547.864] rdpDriverFunc: op 10
+[ 13547.865] (WW) Falling back to old probe method for XRDPDEV
+[ 13547.867] rdpProbe:
+[ 13547.869] (II) Loading sub module "fb"
+[ 13547.870] (II) LoadModule: "fb"
+[ 13547.872] (II) Loading /usr/lib/xorg/modules/libfb.so
+[ 13547.873] (II) Module fb: vendor="X.Org Foundation"
+[ 13547.874] 	compiled for 1.19.6, module version = 1.0.0
+[ 13547.876] 	ABI class: X.Org ANSI C Emulation, version 0.4
+[ 13547.877] (II) XRDPDEV(0): using default device
+[ 13547.878] (WW) VGA arbiter: cannot open kernel arbiter, no multi-card support
+[ 13547.880] rdpPreInit:
+[ 13547.882] (**) XRDPDEV(0): Depth 24, (--) framebuffer bpp 32
+[ 13547.883] (==) XRDPDEV(0): RGB weight 888
+[ 13547.885] (==) XRDPDEV(0): Using gamma correction (1.0, 1.0, 1.0)
+[ 13547.886] (==) XRDPDEV(0): Default visual is TrueColor
+[ 13547.887] (==) XRDPDEV(0): DPI set to (96, 96)
+[ 13547.888] (II) XRDPDEV(0): 	mode "640x480" ok
+[ 13547.889] (II) XRDPDEV(0): 	mode "800x600" ok
+[ 13547.891] (--) XRDPDEV(0): Virtual size is 800x600 (pitch 800)
+[ 13547.891] (**) XRDPDEV(0):  Default mode "800x600": 36.0 MHz (scaled from 0.0 MHz), 35.2 kHz, 56.2 Hz
+[ 13547.892] (II) XRDPDEV(0): Modeline "800x600"x0.0   36.00  800 824 896 1024  600 601 603 625 +hsync +vsync (35.2 kHz d)
+[ 13547.893] (==) Depth 24 pixmap format is 32 bpp
+[ 13547.894] rdpScreenInit: virtualX 800 virtualY 600 rgbBits 8 depth 24
+[ 13547.896] rdpScreenInit: pfbMemory bytes 1920000
+[ 13547.898] rdpScreenInit: pfbMemory 0xffffb9e88010
+[ 13547.900] rdpSimdInit: assigning yuv functions
+[ 13547.902] rdpXvInit: depth 24
+[ 13547.907] (==) XRDPDEV(0): Backing store enabled
+[ 13547.908] rdpClientConInit: kill disconnected [0] timeout [0] sec
+[ 13547.909] 
+[ 13547.912] rdpScreenInit: out
+[ 13547.914] (==) RandR enabled
+[ 13547.919] (II) SELinux: Disabled on system
+[ 13547.921] (II) AIGLX: Screen 0 is not DRI2 capable
+[ 13547.923] (EE) AIGLX: reverting to software rendering
+[ 13547.946] (II) IGLX: enabled GLX_MESA_copy_sub_buffer
+[ 13547.947] (II) IGLX: Loaded and initialized swrast
+[ 13547.948] (II) GLX: Initialized DRISWRAST GL provider for screen 0
+[ 13547.966] (II) Using input driver 'XRDPMOUSE' for 'xrdpMouse'
+[ 13547.967] (**) Option "CorePointer"
+[ 13547.969] (**) xrdpMouse: always reports core events
+[ 13547.970] rdpmousePreInit: drv 0xaaaae72ab480 info 0xaaaae73d8630, flags 0x0
+[ 13547.972] (II) XINPUT: Adding extended input device "xrdpMouse" (type: Mouse, id 6)
+[ 13547.973] rdpmouseControl: what 0
+[ 13547.975] rdpmouseDeviceInit:
+[ 13547.977] rdpmouseCtrl:
+[ 13547.979] rdpRegisterInputCallback: type 1 proc 0xffffba071de0
+[ 13547.981] (**) xrdpMouse: (accel) keeping acceleration scheme 1
+[ 13547.982] (**) xrdpMouse: (accel) acceleration profile 0
+[ 13547.983] (**) xrdpMouse: (accel) acceleration factor: 2.000
+[ 13547.984] (**) xrdpMouse: (accel) acceleration threshold: 4
+[ 13547.985] rdpmouseControl: what 1
+[ 13547.986] rdpmouseDeviceOn:
+[ 13547.988] (II) Using input driver 'XRDPKEYB' for 'xrdpKeyboard'
+[ 13547.989] (**) Option "CoreKeyboard"
+[ 13547.991] (**) xrdpKeyboard: always reports core events
+[ 13547.992] rdpkeybPreInit: drv 0xaaaae72aa110 info 0xaaaae75615f0, flags 0x0
+[ 13547.994] (II) XINPUT: Adding extended input device "xrdpKeyboard" (type: Keyboard, id 7)
+[ 13547.995] rdpkeybControl: what 0
+[ 13547.997] rdpkeybDeviceInit:
+[ 13548.006] rdpkeybChangeKeyboardControl:
+[ 13548.011] rdpkeybChangeKeyboardControl: autoRepeat on
+[ 13548.013] rdpRegisterInputCallback: type 0 proc 0xffffba05e640
+[ 13548.015] rdpkeybControl: what 1
+[ 13548.017] rdpkeybDeviceOn:
+[ 13548.026] rdpSaveScreen:
+[ 13548.028] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13548.029] rdpDeferredRandR:
+[ 13548.031] rdpResizeSession: width 1024 height 768
+[ 13548.033]   calling RRScreenSizeSet
+[ 13548.035] rdpRRScreenSetSize: width 1024 height 768 mmWidth 271 mmHeight 203
+[ 13548.036] rdpRRGetInfo:
+[ 13548.038]   screen resized to 1024x768
+[ 13548.046]   RRScreenSizeSet ok 1
+[ 13548.048] rdpResizeSession: width 1192 height 735
+[ 13548.050]   calling RRScreenSizeSet
+[ 13548.051] rdpRRScreenSetSize: width 1192 height 735 mmWidth 315 mmHeight 194
+[ 13548.054] rdpRRGetInfo:
+[ 13548.056]   screen resized to 1192x735
+[ 13548.059]   RRScreenSizeSet ok 1
+[ 13548.113] rdpInDeferredUpdateCallback:
+[ 13548.115] rdpkeybChangeKeyboardControl:
+[ 13548.116] rdpkeybChangeKeyboardControl: autoRepeat off
+[ 13548.152] rdpRRGetInfo:
+[ 13548.256] rdpClientConGotConnection:
+[ 13548.261] rdpClientConGotConnection: g_sck_accept ok new_sck 18
+[ 13548.264] rdpClientConGotConnection: adding only clientCon
+[ 13548.266] rdpClientConProcessMsgVersion: version 0 0 0 1
+[ 13548.268] rdpClientConProcessScreenSizeMsg: set width 1192 height 735 bpp 16
+[ 13548.269] rdpClientConProcessScreenSizeMsg: shmemid 0 shmemptr 0xffffb9eb1000
+[ 13548.271] rdpClientConProcessMsgClientInput: invalidate x 0 y 0 cx 1192 cy 735
+[ 13548.273] rdpClientConProcessMsgClientInfo:
+[ 13548.276]   got client info bytes 5744
+[ 13548.278]   jpeg support 0
+[ 13548.280]   offscreen support 0
+[ 13548.282]   offscreen size 0
+[ 13548.284]   offscreen entries 0
+[ 13548.285]   client supports glyph cache but server disabled
+[ 13548.288]   client can not do offscreen to offscreen blits
+[ 13548.290]   client can do new(color) cursor
+[ 13548.291]   client can not do multimon
+[ 13548.293] rdpRRSetRdpOutputs: numCrtcs 0 monitorCount 0
+[ 13548.295] rdpRRSetRdpOutputs: add output 0 left 0 top 0 width 1192 height 735
+[ 13548.296] rdpLoadLayout: keylayout 0x00000409 variant  display 10
+[ 13548.298] rdpkeybChangeKeyboardControl:
+[ 13548.300] rdpkeybChangeKeyboardControl: autoRepeat on
+[ 13548.302] rdpkeybChangeKeyboardControl:
+[ 13548.304] rdpkeybChangeKeyboardControl: autoRepeat on
+[ 13548.406] rdpInDeferredUpdateCallback:
+[ 13548.409] rdpkeybChangeKeyboardControl:
+[ 13548.412] rdpkeybChangeKeyboardControl: autoRepeat off
+[ 13548.415] rdpkeybChangeKeyboardControl:
+[ 13548.417] rdpkeybChangeKeyboardControl: autoRepeat off
+[ 13558.030] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13568.036] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13578.041] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13588.047] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13598.050] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13608.052] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13618.057] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13628.065] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13638.068] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13648.074] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13658.078] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13668.086] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13678.089] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13688.095] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13698.098] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13708.104] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13718.108] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13728.110] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13738.114] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13748.120] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13758.123] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13768.132] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13778.137] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13788.139] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13798.142] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13808.151] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13818.157] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13828.160] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13838.163] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13848.167] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13858.173] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13868.185] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13878.199] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13888.207] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13898.221] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13908.226] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13918.251] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13928.261] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13938.268] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13948.280] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13958.291] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13968.296] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13978.307] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13988.321] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 13998.327] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14008.336] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14018.341] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14028.351] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14038.381] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14048.396] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14058.416] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14068.435] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14078.452] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14088.474] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14098.493] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14108.503] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14118.528] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14128.551] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14138.577] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14148.591] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14158.620] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14168.647] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14178.665] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14188.683] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14198.709] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14208.722] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14218.748] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14228.762] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14238.786] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14248.804] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14258.819] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14268.839] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14278.865] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)
+[ 14288.891] (EE) dbus-core: error connecting to system bus: org.freedesktop.DBus.Error.FileNotFound (Failed to connect to socket /var/run/dbus/system_bus_socket: No such file or directory)

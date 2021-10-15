@@ -1,0 +1,7 @@
+[20211015-21:48:26] [CORE ] main: app started pid 441(0x000001b9)
+[20211015-21:48:26] [INFO ] main: DISPLAY env var set to :10.0
+[20211015-21:48:26] [INFO ] main: using DISPLAY 10
+[20211015-21:48:26] [INFO ] channel_thread_loop: thread start
+[20211015-21:48:27] [INFO ] Socket 12: AF_UNIX connection received
+[20211015-21:48:27] [INFO ] send_init_response_message:
+[20211015-22:12:13] [INFO ] channel_thread_loop: trans_check_wait_objs error resetting
