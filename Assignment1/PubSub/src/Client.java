@@ -14,9 +14,10 @@ public class Client extends Node {
 	static final int DEFAULT_DST_PORT = 50001;
 	static final String DEFAULT_DST_NODE = "broker";
 
-	static final int HEADER_LENGTH = 2;
+	static final int HEADER_LENGTH = 3;
 	static final int TYPE = 0;
-	static final int MESSAGE_LENGTH = 1;
+	static final int SUB_TOPIC = 1;
+	static final int MESSAGE_LENGTH = 2;
 
 	static final byte ACKCODE = 1;
 	static final byte ACKPACKET = 10;
@@ -25,6 +26,10 @@ public class Client extends Node {
 	static final byte CLIENT = 2;
 	static final byte SERVER = 3;
 	static final byte ACK = 4;
+
+	static final byte POOL_ONE = 1;
+	static final byte POOL_TWO = 2;
+	static final byte POOL_THREE = 3;
 
 	static final int UPPER_LIMIT = 30;
 
@@ -66,10 +71,23 @@ public class Client extends Node {
 		}
 	}
 
-	public synchronized void start(String content) {
+	public synchronized void start(String content, int subTopic) {
 		try {
 			byte[] data = new byte[HEADER_LENGTH + content.length()];
 			data[TYPE] = CLIENT;
+			switch(subTopic) {
+				case POOL_ONE:
+					data[SUB_TOPIC] = POOL_ONE;
+					break;
+				case POOL_TWO:
+					data[SUB_TOPIC] = POOL_TWO;
+					break;
+				case POOL_THREE:
+					data[SUB_TOPIC] = POOL_THREE;
+					break;
+				default:
+					System.err.println("ERROR: invalid subTopic");
+			}
 			data[MESSAGE_LENGTH] = (byte) content.length();
 			System.arraycopy(content.getBytes(), 0 , data, HEADER_LENGTH, content.length());
 			DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -91,6 +109,7 @@ public class Client extends Node {
             content = new String(buffer);
             data = new byte[HEADER_LENGTH];
             data[TYPE] = ACK;
+			data[SUB_TOPIC] = 0;
             data[ACKCODE] = ACKPACKET;
             response = new DatagramPacket(data, data.length);
             response.setSocketAddress(packet.getSocketAddress());
@@ -111,8 +130,10 @@ public class Client extends Node {
 		try {
 			Random generator = new Random();
 			int measurement = generator.nextInt(UPPER_LIMIT);
+			int poolNumber = generator.nextInt(POOL_THREE - POOL_ONE) + POOL_ONE; 
+			System.out.println(poolNumber);
 			String content = String.valueOf(measurement);
-			(new Client(DEFAULT_DST_NODE, DEFAULT_DST_PORT, DEFAULT_SRC_PORT)).start(content);
+			(new Client(DEFAULT_DST_NODE, DEFAULT_DST_PORT, DEFAULT_SRC_PORT)).start(content, poolNumber);
 			System.out.println("Program completed");
 		} catch(java.lang.Exception e) {e.printStackTrace();}
 	}

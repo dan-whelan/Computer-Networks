@@ -1,18 +1,18 @@
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
-import java.net.SocketAddress;
 /**
  * Subscriber class for receiving instruction from Server via Broker
  */
 public class Subscriber extends Node {
     static final int DEFAULT_SRC_PORT = 50005;
     static final int DEFAULT_DST_PORT = 50001;
-    static final String DEFAULT_DST_NODE = "subscriber";
+    static final String DEFAULT_DST_NODE = "broker";
 
-    static final int HEADER_LENGTH = 2;
-    static final int TYPE = 0;
-    static final int MESSAGE_LENGTH = 1;
+    static final int HEADER_LENGTH = 3;
+	static final int TYPE = 0;
+	static final int SUB_TOPIC = 1;
+	static final int MESSAGE_LENGTH = 2;
 
     static final int ACKCODE = 1;
     static final int ACKPACKET = 10;
@@ -22,6 +22,11 @@ public class Subscriber extends Node {
     static final byte SERVER = 3;
     static final byte ACK = 4;
     static final byte SUBSCRIBER = 5;
+
+	static final byte READY = 0;
+	static final byte POOL_ONE = 1;
+	static final byte POOL_TWO = 2;
+	static final byte POOL_THREE = 3;
 
     InetSocketAddress dstAddress;
 
@@ -81,7 +86,7 @@ public class Subscriber extends Node {
             System.out.println("System continuing as normal");
         }
         else {
-            System.out.println("Reducing Chlorine Levels");
+            System.out.println(content);
         }
         String response = "Instructions carried out";
         try {
@@ -99,7 +104,16 @@ public class Subscriber extends Node {
 
     public synchronized void start() {
         try {
-            System.out.println("Waiting for contact...");
+            String message = "Ready to Receive";
+			byte[] data = new byte[HEADER_LENGTH + message.length()];
+			data[TYPE] = SERVER;
+			data[SUB_TOPIC] = READY;
+			data[MESSAGE_LENGTH] = (byte) message.length();
+			System.arraycopy(message.getBytes(), 0 , data, HEADER_LENGTH, message.length());
+			DatagramPacket packet = new DatagramPacket(data, data.length);
+			packet.setSocketAddress(dstAddress);
+			socket.send(packet);
+            System.out.println("Waiting for Contact...");
             this.wait();
         } catch(Exception e) {
             e.printStackTrace();

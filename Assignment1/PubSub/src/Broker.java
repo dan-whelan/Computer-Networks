@@ -12,10 +12,10 @@ public class Broker extends Node {
     static final int SERVER_PORT = 50000;
     static final int SUBSCRIBER_PORT = 50005;
 
-    static final int HEADER_LENGTH = 2;
-    static final int TYPE = 0;
-    static final byte TYPE_UNKNOWN =0;
-    static final int MESSAGE_LENGTH = 1;
+    static final int HEADER_LENGTH = 3;
+	static final int TYPE = 0;
+	static final int SUB_TOPIC = 1;
+	static final int MESSAGE_LENGTH = 2;
 
     static final byte BROKER = 1;
     static final byte CLIENT = 2;
@@ -24,11 +24,17 @@ public class Broker extends Node {
     static final byte SUBSCRIBER = 5;
     static final byte BROKER_SUBSCRIBER = 6;
 
+	static final byte READY = 0;
+	static final byte POOL_ONE = 1;
+	static final byte POOL_TWO = 2;
+	static final byte POOL_THREE = 3;
+
     static final byte ACKPACKET = 10;
     static final int ACKCODE = 1;
+    byte lastPacketSent;
 
-    private InetSocketAddress serverAddress = new InetSocketAddress("server", SERVER_PORT);
-    private InetSocketAddress subscriberAddress = new InetSocketAddress("subscriber", SUBSCRIBER_PORT);
+    private InetSocketAddress serverAddress;
+    private InetSocketAddress subscriberAddress;
 
     Broker(int port) {
         try {
@@ -44,21 +50,64 @@ public class Broker extends Node {
             byte[] data;
             String content;
             data = packet.getData();
-            switch(data[TYPE]) { 
+            switch(data[TYPE]) {
                 case ACK:
-                    System.out.println("Packet recieved");
+                    String sender = (lastPacketSent == CLIENT) ? "Client" : ((lastPacketSent == SERVER) ? "Server" : "Subscriber");
+                    System.out.println("Packet recieved by: " + sender);
                     break;
                 case CLIENT:
-                    content = sendAck(packet, data);
-                    sendPacket(BROKER, content, serverAddress);
+                    switch(data[SUB_TOPIC]) {
+                        case POOL_ONE:
+                            content = sendAck(packet, data);
+                            sendPacket(BROKER, POOL_ONE, content, serverAddress);
+                            break;
+                        case POOL_TWO:
+                            content = sendAck(packet, data);
+                            sendPacket(BROKER, POOL_TWO, content, serverAddress);
+                            break;
+                        case POOL_THREE:
+                            content = sendAck(packet, data);
+                            sendPacket(BROKER, POOL_THREE, content, serverAddress);
+                            break;
+                        default:
+                            System.err.println("ERROR: Unexpected Packet");
+                    }
                     break;
                 case SERVER:
-                    content = sendAck(packet, data);
-                    sendPacket(BROKER, content, subscriberAddress);
+                    switch(data[SUB_TOPIC]) {
+                        case READY:
+                            serverAddress = new InetSocketAddress("server", packet.getPort());
+                            content = sendAck(packet, data);
+                            System.out.println("Server says: " + content);
+                            break;
+                        case POOL_ONE:
+                            content = sendAck(packet, data);
+                            sendPacket(BROKER, POOL_ONE, content, subscriberAddress);
+                            break;
+                        case POOL_TWO:
+                            content = sendAck(packet, data);
+                            sendPacket(BROKER, POOL_TWO, content, subscriberAddress);
+                            break;
+                        case POOL_THREE:
+                            content = sendAck(packet, data);
+                            sendPacket(BROKER, POOL_THREE, content, subscriberAddress);
+                            break;
+                        default:
+                            System.err.println("ERROR: Unexpected Packet");
+                    }
                     break;
                 case SUBSCRIBER:
-                    content = sendAck(packet, data);
-                    sendPacket(BROKER_SUBSCRIBER, content, serverAddress);
+                    switch(data[SUB_TOPIC]) {
+                        case READY:
+                            serverAddress = new InetSocketAddress("subscriber", packet.getPort());
+                            content = sendAck(packet, data);
+                            System.out.println("Subscriber says: " + content);
+                            break; 
+                        default:
+                            content = sendAck(packet, data);
+                            sendPacket(BROKER, SUBSCRIBER, content, serverAddress);
+                            break;
+                    }
                     break;
                 default:
                    System.err.println("Error: Unexpected packet received");
@@ -84,6 +133,7 @@ public class Broker extends Node {
             content = new String(buffer);
             data = new byte[HEADER_LENGTH];
             data[TYPE] = ACK;
+            data[SUB_TOPIC] = 0;
             data[ACKCODE] = ACKPACKET;
             response = new DatagramPacket(data, data.length);
             response.setSocketAddress(packet.getSocketAddress());
@@ -99,33 +149,19 @@ public class Broker extends Node {
       * @param type location packet is being sent to 
       * @param content content to be contained within the packet
       */
-    private void sendPacket(int type, String content, InetSocketAddress dstAddress){
+    private void sendPacket(byte type, byte subTopic, String content, InetSocketAddress dstAddress){
         try {
             byte[] data;
             DatagramPacket packet;
-            switch(type) {
-                case BROKER:
-                    data = new byte[HEADER_LENGTH + content.length()];
-                    data[TYPE] = BROKER;
-                    data[MESSAGE_LENGTH] = (byte) content.length();
-                    System.arraycopy(content.getBytes(), 0, data, HEADER_LENGTH, content.length());
-                    packet = new DatagramPacket(data, data.length);
-                    packet.setSocketAddress(dstAddress);
-                    socket.send(packet);
-                    break;
-                case BROKER_SUBSCRIBER:
-                    data = new byte[HEADER_LENGTH + content.length()];
-                    data[TYPE] = BROKER_SUBSCRIBER;
-                    data[MESSAGE_LENGTH] = (byte) content.length();
-                    System.arraycopy(content.getBytes(), 0, data, HEADER_LENGTH, content.length());
-                    packet = new DatagramPacket(data, data.length);
-                    packet.setSocketAddress(dstAddress);
-                    socket.send(packet); 
-                    break;
-                default:
-                    System.err.println("Error: invalid type");
-                    break;
-            }
+            lastPacketSent = type;
+            data = new byte[HEADER_LENGTH + content.length()];
+            data[TYPE] = BROKER;
+            data[SUB_TOPIC] = subTopic;
+            data[MESSAGE_LENGTH] = (byte) content.length();
+            System.arraycopy(content.getBytes(), 0, data, HEADER_LENGTH, content.length());
+            packet = new DatagramPacket(data, data.length);
+            packet.setSocketAddress(dstAddress);
+            socket.send(packet);
         } catch(Exception e) {
             e.printStackTrace();
         }
