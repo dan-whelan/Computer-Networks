@@ -63,15 +63,15 @@ public class Server extends Node {
 					switch(data[SUB_TOPIC]) {
 						case POOL_ONE:
 							System.out.println("Chlorine measurement for Pool One is: " + content + "ppm");
-							sendResponse(content, POOL_ONE);
+							sendPacket(content, POOL_ONE);
 							break;
 						case POOL_TWO:
 							System.out.println("Chlorine measurement for Pool Two is: " + content + "ppm");
-							sendResponse(content, POOL_TWO);
+							sendPacket(content, POOL_TWO);
 							break;
 						case POOL_THREE:
 							System.out.println("Chlorine measurement for Pool Three is: " + content + "ppm");
-							sendResponse(content, POOL_THREE);
+							sendPacket(content, POOL_THREE);
 							break;
 						case SUBSCRIBER:
 							System.out.println("Subscriber says: " + content);
@@ -79,6 +79,7 @@ public class Server extends Node {
 						default:
 							System.err.println("ERROR: invalid SubTopic");
 					}
+					break;
 				default:
 					System.err.println("Error: Unexpected packet received");
 					break;
@@ -109,7 +110,7 @@ public class Server extends Node {
         }
 	}
 
-	public void sendResponse(String content, byte subTopic){
+	public void sendPacket(String content, byte subTopic){
 		int measurement = Integer.parseInt(content);
 		String response = "";
 		if(measurement <= UPPER_CHLORINE_LIMIT && measurement >= LOWER_CHLORINE_LIMIT) {

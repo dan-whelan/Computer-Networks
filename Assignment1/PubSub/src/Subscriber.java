@@ -51,10 +51,10 @@ public class Subscriber extends Node {
                     break;
                 case BROKER:
                     content = sendAck(packet,data);
-                    doInstruction(content);
+                    doInstruction(content,data);
                     break;
                 default:
-                    System.err.println("Error: UNexpected Packet");
+                    System.err.println("Error: Unexpected Packet");
                     break;
             }
         } catch(Exception e) {
@@ -81,17 +81,41 @@ public class Subscriber extends Node {
         }
     }
 
-    private void doInstruction(String content) {
-        if(content.equals("Continue as normal")) {
-            System.out.println("System continuing as normal");
-        }
-        else {
-            System.out.println(content);
+    private void doInstruction(String content, byte[] data) {
+        switch(data[SUB_TOPIC]) {
+            case POOL_ONE:
+                if(content.equals("Continue as normal")) {
+                    System.out.println("System continuing as normal as measurement between 5ppm and 15ppm in Pool One");
+                }
+                else {
+                    System.out.println(content + "ppm in Pool One");
+                }
+                break;
+            case POOL_TWO:
+                if(content.equals("Continue as normal")) {
+                    System.out.println("System continuing as normal as measurement between 5ppm and 15ppm in Pool Two");
+                }
+                else {
+                    System.out.println(content + "ppm in Pool Two");
+                }
+                break;
+            case POOL_THREE:
+                if(content.equals("Continue as normal")) {
+                    System.out.println("System continuing as normal as measurement between 5ppm and 15ppm in Pool Three");
+                }
+                else {
+                    System.out.println(content + "ppm in Pool Three");
+                }
+                break;
+            default:
+                System.err.println("Error: Pool does not exist in this system");
+                break;
         }
         String response = "Instructions carried out";
         try {
-            byte[] data = new byte[HEADER_LENGTH + response.length()];
+            data = new byte[HEADER_LENGTH + response.length()];
             data[TYPE] = SUBSCRIBER;
+            data[SUB_TOPIC] = 1;
             data[MESSAGE_LENGTH] = (byte) response.length();
             System.arraycopy(response.getBytes(), 0, data, HEADER_LENGTH, response.length());
             DatagramPacket packet = new DatagramPacket(data, data.length);
@@ -106,7 +130,7 @@ public class Subscriber extends Node {
         try {
             String message = "Ready to Receive";
 			byte[] data = new byte[HEADER_LENGTH + message.length()];
-			data[TYPE] = SERVER;
+			data[TYPE] = SUBSCRIBER;
 			data[SUB_TOPIC] = READY;
 			data[MESSAGE_LENGTH] = (byte) message.length();
 			System.arraycopy(message.getBytes(), 0 , data, HEADER_LENGTH, message.length());

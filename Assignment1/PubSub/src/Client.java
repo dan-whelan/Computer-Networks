@@ -5,6 +5,7 @@ import java.net.DatagramSocket;
 import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 import java.util.Random;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Client class
@@ -71,29 +72,34 @@ public class Client extends Node {
 		}
 	}
 
-	public synchronized void start(String content, int subTopic) {
+	public synchronized void start(Random generator) {
 		try {
-			byte[] data = new byte[HEADER_LENGTH + content.length()];
-			data[TYPE] = CLIENT;
-			switch(subTopic) {
-				case POOL_ONE:
-					data[SUB_TOPIC] = POOL_ONE;
-					break;
-				case POOL_TWO:
-					data[SUB_TOPIC] = POOL_TWO;
-					break;
-				case POOL_THREE:
-					data[SUB_TOPIC] = POOL_THREE;
-					break;
-				default:
-					System.err.println("ERROR: invalid subTopic");
+			while(true) {
+				int measurement = generator.nextInt(UPPER_LIMIT);
+				int poolNumber = generator.nextInt(POOL_THREE) + POOL_ONE;
+				String content = String.valueOf(measurement);
+				byte[] data = new byte[HEADER_LENGTH + content.length()];
+				data[TYPE] = CLIENT;
+				switch(poolNumber) {
+					case POOL_ONE:
+						data[SUB_TOPIC] = POOL_ONE;
+						break;
+					case POOL_TWO:
+						data[SUB_TOPIC] = POOL_TWO;
+						break;
+					case POOL_THREE:
+						data[SUB_TOPIC] = POOL_THREE;
+						break;
+					default:
+						System.err.println("ERROR: invalid subTopic");
+				}
+				data[MESSAGE_LENGTH] = (byte) content.length();
+				System.arraycopy(content.getBytes(), 0 , data, HEADER_LENGTH, content.length());
+				DatagramPacket packet = new DatagramPacket(data, data.length);
+				packet.setSocketAddress(dstAddress);
+				socket.send(packet);
+				java.util.concurrent.TimeUnit.SECONDS.sleep(15);
 			}
-			data[MESSAGE_LENGTH] = (byte) content.length();
-			System.arraycopy(content.getBytes(), 0 , data, HEADER_LENGTH, content.length());
-			DatagramPacket packet = new DatagramPacket(data, data.length);
-			packet.setSocketAddress(dstAddress);
-			socket.send(packet);
-			this.wait();
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -129,11 +135,7 @@ public class Client extends Node {
 	public static void main(String[] args) {
 		try {
 			Random generator = new Random();
-			int measurement = generator.nextInt(UPPER_LIMIT);
-			int poolNumber = generator.nextInt(POOL_THREE - POOL_ONE) + POOL_ONE; 
-			System.out.println(poolNumber);
-			String content = String.valueOf(measurement);
-			(new Client(DEFAULT_DST_NODE, DEFAULT_DST_PORT, DEFAULT_SRC_PORT)).start(content, poolNumber);
+			(new Client(DEFAULT_DST_NODE, DEFAULT_DST_PORT, DEFAULT_SRC_PORT)).start(generator);
 			System.out.println("Program completed");
 		} catch(java.lang.Exception e) {e.printStackTrace();}
 	}

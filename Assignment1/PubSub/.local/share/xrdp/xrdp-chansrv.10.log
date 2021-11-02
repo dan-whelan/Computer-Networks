@@ -1,7 +1,16 @@
-[20211015-21:48:26] [CORE ] main: app started pid 441(0x000001b9)
-[20211015-21:48:26] [INFO ] main: DISPLAY env var set to :10.0
-[20211015-21:48:26] [INFO ] main: using DISPLAY 10
-[20211015-21:48:26] [INFO ] channel_thread_loop: thread start
-[20211015-21:48:27] [INFO ] Socket 12: AF_UNIX connection received
-[20211015-21:48:27] [INFO ] send_init_response_message:
-[20211015-22:12:13] [INFO ] channel_thread_loop: trans_check_wait_objs error resetting
+[20211101-19:34:28] [CORE ] main: app started pid 442(0x000001ba)
+[20211101-19:34:28] [INFO ] main: DISPLAY env var set to :10.0
+[20211101-19:34:28] [INFO ] main: using DISPLAY 10
+[20211101-19:34:28] [INFO ] channel_thread_loop: thread start
+[20211101-19:34:29] [INFO ] Socket 12: AF_UNIX connection received
+[20211101-19:34:29] [INFO ] send_init_response_message:
+[20211101-19:35:54] [INFO ] channel_thread_loop: trans_check_wait_objs error resetting
+[20211101-19:36:07] [INFO ] Socket 13: AF_UNIX connection received
+[20211101-19:36:07] [INFO ] send_init_response_message:
+[20211101-19:36:39] [INFO ] channel_thread_loop: trans_check_wait_objs error resetting
+[20211101-19:36:41] [INFO ] Socket 13: AF_UNIX connection received
+[20211101-19:36:41] [INFO ] send_init_response_message:
+[20211101-19:36:43] [INFO ] channel_thread_loop: trans_check_wait_objs error resetting
+[20211101-19:36:44] [INFO ] Socket 13: AF_UNIX connection received
+[20211101-19:36:44] [INFO ] send_init_response_message:
+[20211101-19:41:32] [INFO ] channel_thread_loop: trans_check_wait_objs error resetting

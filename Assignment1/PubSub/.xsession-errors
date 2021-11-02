@@ -20,3 +20,84 @@ libEGL warning: DRI2: failed to authenticate
 nl80211 not found.
 
 (process:497): GLib-CRITICAL **: 21:50:33.239: g_hash_table_size: assertion 'hash_table != NULL' failed
+Xsession: X session started for abc at Wed Oct 20 15:37:17 UTC 2021
+localuser:abc being added to access control list
+dbus-update-activation-environment: systemd --user not found, ignoring --systemd argument
+dbus-update-activation-environment: setting USER=abc
+dbus-update-activation-environment: setting HOME=/config
+dbus-update-activation-environment: setting DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-T1GFzRRdTn,guid=16c7335678ace25b1750f707617037ad
+dbus-update-activation-environment: setting PULSE_SCRIPT=/etc/xrdp/pulse/default.pa
+dbus-update-activation-environment: setting LOGNAME=abc
+dbus-update-activation-environment: setting PATH=/sbin:/bin:/usr/bin:/usr/local/bin
+dbus-update-activation-environment: setting XRDP_SOCKET_PATH=/var/run/xrdp/sockdir
+dbus-update-activation-environment: setting DISPLAY=:11.0
+dbus-update-activation-environment: setting UID=1000
+dbus-update-activation-environment: setting SHELL=/bin/bash
+dbus-update-activation-environment: setting XRDP_SESSION=1
+dbus-update-activation-environment: setting GPG_AGENT_INFO=/config/.gnupg/S.gpg-agent:0:1
+dbus-update-activation-environment: setting PWD=/config
+Openbox-Message: Unable to find a valid menu file "/var/lib/openbox/debian-menu.xml"
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-abc'
+libEGL warning: DRI2: failed to authenticate
+nl80211 not found.
+Xsession: X session started for abc at Wed Oct 27 11:25:30 UTC 2021
+localuser:abc being added to access control list
+dbus-update-activation-environment: systemd --user not found, ignoring --systemd argument
+dbus-update-activation-environment: setting USER=abc
+dbus-update-activation-environment: setting HOME=/config
+dbus-update-activation-environment: setting DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-4KZxZNlrHR,guid=827bffbf7c2e3459ef1c15cb6179372a
+dbus-update-activation-environment: setting PULSE_SCRIPT=/etc/xrdp/pulse/default.pa
+dbus-update-activation-environment: setting LOGNAME=abc
+dbus-update-activation-environment: setting PATH=/sbin:/bin:/usr/bin:/usr/local/bin
+dbus-update-activation-environment: setting XRDP_SOCKET_PATH=/var/run/xrdp/sockdir
+dbus-update-activation-environment: setting DISPLAY=:11.0
+dbus-update-activation-environment: setting UID=1000
+dbus-update-activation-environment: setting SHELL=/bin/bash
+dbus-update-activation-environment: setting XRDP_SESSION=1
+dbus-update-activation-environment: setting GPG_AGENT_INFO=/config/.gnupg/S.gpg-agent:0:1
+dbus-update-activation-environment: setting PWD=/config
+Openbox-Message: Unable to find a valid menu file "/var/lib/openbox/debian-menu.xml"
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-abc'
+libEGL warning: DRI2: failed to authenticate
+nl80211 not found.
+Xsession: X session started for abc at Mon Nov  1 19:34:28 UTC 2021
+localuser:abc being added to access control list
+dbus-update-activation-environment: systemd --user not found, ignoring --systemd argument
+dbus-update-activation-environment: setting USER=abc
+dbus-update-activation-environment: setting HOME=/config
+dbus-update-activation-environment: setting DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-rDB2uBwqdZ,guid=ee43e9c0588d7b0870a99e1561804144
+dbus-update-activation-environment: setting PULSE_SCRIPT=/etc/xrdp/pulse/default.pa
+dbus-update-activation-environment: setting LOGNAME=abc
+dbus-update-activation-environment: setting PATH=/sbin:/bin:/usr/bin:/usr/local/bin
+dbus-update-activation-environment: setting XRDP_SOCKET_PATH=/var/run/xrdp/sockdir
+dbus-update-activation-environment: setting DISPLAY=:10.0
+dbus-update-activation-environment: setting UID=1000
+dbus-update-activation-environment: setting SHELL=/bin/bash
+dbus-update-activation-environment: setting XRDP_SESSION=1
+dbus-update-activation-environment: setting GPG_AGENT_INFO=/config/.gnupg/S.gpg-agent:0:1
+dbus-update-activation-environment: setting PWD=/config
+Openbox-Message: Unable to find a valid menu file "/var/lib/openbox/debian-menu.xml"
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-abc'
+libEGL warning: DRI2: failed to authenticate
+nl80211 not found.
+Xsession: X session started for abc at Mon Nov  1 19:48:57 UTC 2021
+localuser:abc being added to access control list
+dbus-update-activation-environment: systemd --user not found, ignoring --systemd argument
+dbus-update-activation-environment: setting USER=abc
+dbus-update-activation-environment: setting HOME=/config
+dbus-update-activation-environment: setting DBUS_SESSION_BUS_ADDRESS=unix:abstract=/tmp/dbus-cleFPgy4EK,guid=d1a3ff053c5731fc5ebddad2618044a9
+dbus-update-activation-environment: setting PULSE_SCRIPT=/etc/xrdp/pulse/default.pa
+dbus-update-activation-environment: setting LOGNAME=abc
+dbus-update-activation-environment: setting PATH=/sbin:/bin:/usr/bin:/usr/local/bin
+dbus-update-activation-environment: setting XRDP_SOCKET_PATH=/var/run/xrdp/sockdir
+dbus-update-activation-environment: setting DISPLAY=:11.0
+dbus-update-activation-environment: setting UID=1000
+dbus-update-activation-environment: setting SHELL=/bin/bash
+dbus-update-activation-environment: setting XRDP_SESSION=1
+dbus-update-activation-environment: setting GPG_AGENT_INFO=/config/.gnupg/S.gpg-agent:0:1
+dbus-update-activation-environment: setting PWD=/config
+Obt-Message: Xinerama extension is not present on the server
+Openbox-Message: Unable to find a valid menu file "/var/lib/openbox/debian-menu.xml"
+QStandardPaths: XDG_RUNTIME_DIR not set, defaulting to '/tmp/runtime-abc'
+libEGL warning: DRI2: failed to authenticate
+nl80211 not found.

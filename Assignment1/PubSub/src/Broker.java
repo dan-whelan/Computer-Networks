@@ -52,8 +52,7 @@ public class Broker extends Node {
             data = packet.getData();
             switch(data[TYPE]) {
                 case ACK:
-                    String sender = (lastPacketSent == CLIENT) ? "Client" : ((lastPacketSent == SERVER) ? "Server" : "Subscriber");
-                    System.out.println("Packet recieved by: " + sender);
+                    System.out.println("Packet recieved");
                     break;
                 case CLIENT:
                     switch(data[SUB_TOPIC]) {
@@ -76,7 +75,7 @@ public class Broker extends Node {
                 case SERVER:
                     switch(data[SUB_TOPIC]) {
                         case READY:
-                            serverAddress = new InetSocketAddress("server", packet.getPort());
+                            serverAddress = new InetSocketAddress("server", SERVER_PORT);
                             content = sendAck(packet, data);
                             System.out.println("Server says: " + content);
                             break;
@@ -99,7 +98,7 @@ public class Broker extends Node {
                 case SUBSCRIBER:
                     switch(data[SUB_TOPIC]) {
                         case READY:
-                            serverAddress = new InetSocketAddress("subscriber", packet.getPort());
+                            subscriberAddress = new InetSocketAddress("subscriber", SUBSCRIBER_PORT);
                             content = sendAck(packet, data);
                             System.out.println("Subscriber says: " + content);
                             break; 
