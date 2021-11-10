@@ -1,5 +1,6 @@
 import java.util.Scanner;
 import java.net.DatagramSocket;
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 
@@ -13,13 +14,13 @@ public class Application extends Node{
 
     static final byte ENDPOINT_ONE = 0;
     static final byte ENDPOINT_TWO = 1;
-    static final byte ERROR = 2; //for now
-    static final byte ACK = 3;
+    static final byte ERROR = 5; //for now
+    static final byte ACK = 6;
 
-    static final int ACKCODE = 4;
+    static final int ACKCODE = 1;
     static final byte ACKPACKET = 10;
 
-    private InetSocketAddress forwardingService = new InetSocketAddress("forwarding-service", SERVICE_PORT);
+    private InetSocketAddress forwardingService = new InetSocketAddress("ForwardingService", SERVICE_PORT);
     private String destination;
     private String message;
 
@@ -36,19 +37,24 @@ public class Application extends Node{
         try {
             byte[] data;
             data = packet.getData();
-            message = sendAck(packet, data);
             switch(data[TYPE]) {
                 case ACK:
                     System.out.println("Packet Received by Forwarding Service");
                     break;
                 case ENDPOINT_ONE:
-                    System.out.println("Endpoint One Says: " + message);
+                    message = sendAck(packet, data);
+                    System.out.println("Endpoint Two Says: " + message);
+                    start();
                     break;
                 case ENDPOINT_TWO:
-                    System.out.println("Endpoint Two Says: " + message);
+                    message = sendAck(packet, data);
+                    System.out.println("Endpoint One Says: " + message);
+                    start();
                     break;
                 default:
+                    message = sendAck(packet, data);
                     System.err.println("ERROR: Unexpected Packet Received");
+                    start();
                     break;
             }
         } catch (Exception e) {
@@ -58,28 +64,31 @@ public class Application extends Node{
 
     public synchronized void start() {
         try {
+            byte[] data;
+            DatagramPacket packet;
+            Scanner input = new Scanner(System.in);
+            input.useDelimiter("\n");
+            System.out.println("Please enter destination of packet >");
+            destination = input.next();
+            System.out.println("Please enter message to send >");
+            message = input.next();
+            data = new byte[HEADER_LENGTH + message.length()];
+            if(destination.equalsIgnoreCase("endpoint1") || destination.equalsIgnoreCase("endpointone")) {
+                data[TYPE] = ENDPOINT_TWO;
+            }
+            else if(destination.equalsIgnoreCase("endpoint2") || destination.equalsIgnoreCase("endpointtwo")) {
+                data[TYPE] = ENDPOINT_ONE;
+            }
+            else {
+                data[TYPE] = ERROR;
+            }
+            data[LENGTH] = (byte) message.length();
+            System.arraycopy(message.getBytes(), 0, data, HEADER_LENGTH, message.length());
+            packet = new DatagramPacket(data, data.length);
+            packet.setSocketAddress(forwardingService);
+            socket.send(packet);
             while(true) {
-                byte[] data;
-                DatagramPacket packet;
-                System.out.println("Please enter destination of packet >");
-                Scanner input = new Scanner(System.in);
-                destination = input.next();
-                System.out.println("Please enter message to send >");
-                message = input.next();
-                input.close();
-                data = new byte[HEADER_LENGTH + message.length()];
-                if(destination.equalsIgnoreCase("endpoint 1") || destination.equalsIgnoreCase("endpoint one")) {
-                    data[TYPE] = ENDPOINT_ONE;
-                }
-                else if(destination.equalsIgnoreCase("endpoint 2") || destination.equalsIgnoreCase("endpoint two")) {
-                    data[TYPE] = ENDPOINT_TWO;
-                }
-                else data[TYPE] = ERROR;
-                data[LENGTH] = (byte) message.length();
-                System.arraycopy(message.getBytes(), 0, data, HEADER_LENGTH, message.length());
-                packet = new DatagramPacket(data, data.length);
-                packet.setSocketAddress(forwardingService);
-                socket.send(packet);
+                this.wait();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -91,7 +100,7 @@ public class Application extends Node{
             String content;
             DatagramPacket response;
             byte[] buffer = new byte[data[LENGTH]];
-            System.arraycopy(data, HEADER_LENGTH, buffer, 0, LENGTH);
+            System.arraycopy(data, HEADER_LENGTH, buffer, 0, data[LENGTH]);
             content = new String(buffer);
             data = new byte[HEADER_LENGTH];
             data[TYPE] = ACK;
@@ -108,8 +117,8 @@ public class Application extends Node{
 
     public static void main(String[] args) {
         try {
-            Application app = new Application(APPLICATION_PORT);
-            app.start();
+                Application app = new Application(APPLICATION_PORT);
+                app.start();
         } catch (Exception e) {
             e.printStackTrace();
         }

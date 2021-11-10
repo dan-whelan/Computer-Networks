@@ -13,8 +13,8 @@ public class Router extends Node {
 
     static final byte ENDPOINT_ONE = 0;
     static final byte ENDPOINT_TWO = 1;
-    static final byte ERROR = 2; //for now
-    static final byte ACK = 3;
+    static final byte ERROR = 5; //for now
+    static final byte ACK = 6;
 
     static final int NUMBER_OF_ENDPOINTS = 2;
     static final int INFO_TO_BE_STORED = 3;
@@ -25,7 +25,7 @@ public class Router extends Node {
     static final int ROUTER_TWO = 2;
     static final int ROUTER_THREE = 3;
 
-    static final int ACKCODE = 4;
+    static final int ACKCODE = 1;
     static final byte ACKPACKET = 10;
 
     private int routerNumber;
@@ -46,10 +46,13 @@ public class Router extends Node {
             byte[] data;
             data = packet.getData();
             switch(data[TYPE]) {
+                case ACK:
+                    System.out.println("Packet Received");
+                    break;
                 case ENDPOINT_ONE:
                     if(routerNumber == ROUTER_THREE) {
                         String content = sendAck(packet, data);
-                        sendPacket((byte)ROUTER_THREE, content, (InetSocketAddress) forwardingTable[ENDPOINT_ONE][OUT]);
+                        sendPacket((byte)ROUTER_TWO, content, (InetSocketAddress) forwardingTable[ENDPOINT_ONE][OUT]);
                     }
                     else {
                         sendAck(packet, data);
@@ -60,7 +63,7 @@ public class Router extends Node {
                 case ENDPOINT_TWO:
                     if(routerNumber == ROUTER_ONE) {
                         String content = sendAck(packet, data);
-                        sendPacket((byte) ROUTER_ONE, content, (InetSocketAddress) forwardingTable[ENDPOINT_TWO][OUT]);
+                        sendPacket((byte) ROUTER_THREE, content, (InetSocketAddress) forwardingTable[ENDPOINT_TWO][OUT]);
                     }
                     else {
                         sendAck(packet, data);
@@ -129,14 +132,14 @@ public class Router extends Node {
 
     private void initialiseForwardingTable() {
         forwardingTable = new Object[NUMBER_OF_ENDPOINTS][INFO_TO_BE_STORED];
-        forwardingTable[ENDPOINT_ONE][DEST] = ENDPOINT_ONE;
-        forwardingTable[ENDPOINT_TWO][DEST] = ENDPOINT_TWO;
+        forwardingTable[ENDPOINT_ONE][DEST] = ENDPOINT_TWO;
+        forwardingTable[ENDPOINT_TWO][DEST] = ENDPOINT_ONE;
         switch(routerNumber) {
             case ROUTER_ONE: 
-                forwardingTable[ENDPOINT_ONE][IN] = new InetSocketAddress("forwarding-service", SERVICE_PORT);
+                forwardingTable[ENDPOINT_ONE][IN] = new InetSocketAddress("ForwardingService", SERVICE_PORT);
                 forwardingTable[ENDPOINT_ONE][OUT] = new InetSocketAddress("RouterTwo", ROUTER_PORT);
                 forwardingTable[ENDPOINT_TWO][IN] = new InetSocketAddress("RouterTwo", ROUTER_PORT);
-                forwardingTable[ENDPOINT_TWO][OUT] = new InetSocketAddress("forwarding-service", SERVICE_PORT);
+                forwardingTable[ENDPOINT_TWO][OUT] = new InetSocketAddress("ForwardingService", SERVICE_PORT);
                 break;
             case ROUTER_TWO: 
                 forwardingTable[ENDPOINT_ONE][IN] = new InetSocketAddress("RouterOne", ROUTER_PORT);
@@ -146,8 +149,8 @@ public class Router extends Node {
                 break; 
             case ROUTER_THREE: 
                 forwardingTable[ENDPOINT_ONE][IN] = new InetSocketAddress("RouterTwo", ROUTER_PORT);
-                forwardingTable[ENDPOINT_ONE][OUT] = new InetSocketAddress("forwarding-service", SERVICE_PORT);
-                forwardingTable[ENDPOINT_TWO][IN] = new InetSocketAddress("forwarding-service", SERVICE_PORT);
+                forwardingTable[ENDPOINT_ONE][OUT] = new InetSocketAddress("ForwardingService", SERVICE_PORT);
+                forwardingTable[ENDPOINT_TWO][IN] = new InetSocketAddress("ForwardingService", SERVICE_PORT);
                 forwardingTable[ENDPOINT_TWO][OUT] = new InetSocketAddress("RouterTwo", ROUTER_PORT);
                 break;
             default:

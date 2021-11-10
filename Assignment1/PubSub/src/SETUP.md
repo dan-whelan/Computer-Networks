@@ -1,4 +1,4 @@
-# A guide to setting up the topology for CSU33031 Assignment 1 using Docker (M1 macbook running BigSur)
+## A guide to setting up the topology for CSU33031 Assignment 1 using Docker (M1 macbook running BigSur)
 >terminal 1
 docker network create -d bridge --subnet 172.20.0.0/16 PubSub
 docker create --name client -ti -v $PWD/PubSub:/PubSub arm64v8/openjdk /bin/bash
@@ -41,7 +41,7 @@ java -cp . Client
 
 >To Set Up Wireshark
 >terminal 1
-# taken from stack overflow "https://stackoverflow.com/questions/61232668/runing-openmodelica-gui-from-docker-causes-could-not-connect-to-any-x-display"
+## taken from stack overflow "https://stackoverflow.com/questions/61232668/runing-openmodelica-gui-from-docker-causes-could-not-connect-to-any-x-display"
 docker-machine env default
 eval $(docker-machine env default)
 IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')
