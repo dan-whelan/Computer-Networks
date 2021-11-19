@@ -44,7 +44,7 @@ public class ForwardingService extends Node {
                     System.out.println("Packet Received");
                     break;
                 case ENDPOINT_ONE:
-                    content = sendAck(packet, data);
+                    sendAck(packet, data);
                     router = new InetSocketAddress("RouterOne", ROUTER_PORT);
                     application = new InetSocketAddress("EndpointTwo", packet.getPort());
                     System.out.println("EndpointOne");

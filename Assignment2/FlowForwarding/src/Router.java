@@ -29,7 +29,6 @@ public class Router extends Node {
     static final byte ACKPACKET = 10;
 
     private int routerNumber;
-    private Object[][] forwardingTable;
 
     Router(int port, int designation) {
         try {
@@ -52,22 +51,22 @@ public class Router extends Node {
                 case ENDPOINT_ONE:
                     if(routerNumber == ROUTER_THREE) {
                         String content = sendAck(packet, data);
-                        sendPacket((byte)ROUTER_TWO, content, (InetSocketAddress) forwardingTable[ENDPOINT_ONE][OUT]);
+                        sendPacket((byte)ROUTER_TWO, content, (InetSocketAddress) Controller.forwardingTable[routerNumber-1][ENDPOINT_ONE][OUT]);
                     }
                     else {
                         sendAck(packet, data);
-                        packet.setSocketAddress((InetSocketAddress) forwardingTable[ENDPOINT_ONE][OUT]);
+                        packet.setSocketAddress((InetSocketAddress) Controller.forwardingTable[routerNumber-1][ENDPOINT_ONE][OUT]);
                         socket.send(packet);
                     }
                     break;
                 case ENDPOINT_TWO:
                     if(routerNumber == ROUTER_ONE) {
                         String content = sendAck(packet, data);
-                        sendPacket((byte) ROUTER_THREE, content, (InetSocketAddress) forwardingTable[ENDPOINT_TWO][OUT]);
+                        sendPacket((byte) ROUTER_THREE, content, (InetSocketAddress) Controller.forwardingTable[routerNumber-1][ENDPOINT_TWO][OUT]);
                     }
                     else {
                         sendAck(packet, data);
-                        packet.setSocketAddress((InetSocketAddress) forwardingTable[ENDPOINT_TWO][OUT]);
+                        packet.setSocketAddress((InetSocketAddress) Controller.forwardingTable[routerNumber-1][ENDPOINT_TWO][OUT]);
                         socket.send(packet);
                     }
                     break;
@@ -87,8 +86,9 @@ public class Router extends Node {
 
     public synchronized void start() {
         try {
-            initialiseForwardingTable();
-            this.wait();
+            while(true) {
+                this.wait();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,35 +129,7 @@ public class Router extends Node {
             e.printStackTrace();
         }
     }
-
-    private void initialiseForwardingTable() {
-        forwardingTable = new Object[NUMBER_OF_ENDPOINTS][INFO_TO_BE_STORED];
-        forwardingTable[ENDPOINT_ONE][DEST] = ENDPOINT_TWO;
-        forwardingTable[ENDPOINT_TWO][DEST] = ENDPOINT_ONE;
-        switch(routerNumber) {
-            case ROUTER_ONE: 
-                forwardingTable[ENDPOINT_ONE][IN] = new InetSocketAddress("ForwardingService", SERVICE_PORT);
-                forwardingTable[ENDPOINT_ONE][OUT] = new InetSocketAddress("RouterTwo", ROUTER_PORT);
-                forwardingTable[ENDPOINT_TWO][IN] = new InetSocketAddress("RouterTwo", ROUTER_PORT);
-                forwardingTable[ENDPOINT_TWO][OUT] = new InetSocketAddress("ForwardingService", SERVICE_PORT);
-                break;
-            case ROUTER_TWO: 
-                forwardingTable[ENDPOINT_ONE][IN] = new InetSocketAddress("RouterOne", ROUTER_PORT);
-                forwardingTable[ENDPOINT_ONE][OUT] = new InetSocketAddress("RouterThree", ROUTER_PORT);
-                forwardingTable[ENDPOINT_TWO][IN] = new InetSocketAddress("RouterThree", ROUTER_PORT);
-                forwardingTable[ENDPOINT_TWO][OUT] = new InetSocketAddress("RouterOne", SERVICE_PORT);
-                break; 
-            case ROUTER_THREE: 
-                forwardingTable[ENDPOINT_ONE][IN] = new InetSocketAddress("RouterTwo", ROUTER_PORT);
-                forwardingTable[ENDPOINT_ONE][OUT] = new InetSocketAddress("ForwardingService", SERVICE_PORT);
-                forwardingTable[ENDPOINT_TWO][IN] = new InetSocketAddress("ForwardingService", SERVICE_PORT);
-                forwardingTable[ENDPOINT_TWO][OUT] = new InetSocketAddress("RouterTwo", ROUTER_PORT);
-                break;
-            default:
-                break;
-        }
-    }
-    
+        
     public static void main(String[] args) {
         try {
             System.out.println("Please enter router designation number >");
@@ -165,6 +137,8 @@ public class Router extends Node {
             int designation = input.nextInt();
             input.close();
             Router r = new Router(ROUTER_PORT, designation);
+            Controller c = new Controller();
+            c.run();
             r.start();
         } catch (Exception e) {
             e.printStackTrace();

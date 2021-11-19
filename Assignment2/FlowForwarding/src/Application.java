@@ -1,6 +1,5 @@
 import java.util.Scanner;
 import java.net.DatagramSocket;
-import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 
@@ -24,6 +23,8 @@ public class Application extends Node{
     private String destination;
     private String message;
 
+    private boolean init = true;
+
     Application(int srcPort) {
         try {
             socket = new DatagramSocket(srcPort);
@@ -35,6 +36,7 @@ public class Application extends Node{
 
     public synchronized void onReceipt(DatagramPacket packet) {
         try {
+            init = false;
             byte[] data;
             data = packet.getData();
             switch(data[TYPE]) {
@@ -87,8 +89,11 @@ public class Application extends Node{
             packet = new DatagramPacket(data, data.length);
             packet.setSocketAddress(forwardingService);
             socket.send(packet);
-            while(true) {
-                this.wait();
+            input.next();
+            if(init) {
+                while(true) {
+                    this.wait();
+                }
             }
         } catch (Exception e) {
             e.printStackTrace();
