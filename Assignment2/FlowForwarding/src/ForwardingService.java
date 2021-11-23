@@ -3,9 +3,7 @@ import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 
 public class ForwardingService extends Node {
-    static final int APPLICATION_PORT = 50000;
-    static final int SERVICE_PORT = 51510;
-    static final int ROUTER_PORT = 51510;
+    static final int DEFAULT_PORT = 51510;
 
     static final int TYPE = 0;
     static final int LENGTH = 1;
@@ -16,7 +14,7 @@ public class ForwardingService extends Node {
     static final byte ROUTER_ONE = 1;
     static final byte ROUTER_TWO = 2;
     static final byte ROUTER_THREE = 3;
-    static final byte ERROR = 5; //for now
+    static final byte ERROR = 7; //for now
     static final byte ACK = 6;
 
     static final int ACKCODE = 1;
@@ -45,29 +43,27 @@ public class ForwardingService extends Node {
                     break;
                 case ENDPOINT_ONE:
                     sendAck(packet, data);
-                    router = new InetSocketAddress("RouterOne", ROUTER_PORT);
-                    application = new InetSocketAddress("EndpointTwo", packet.getPort());
-                    System.out.println("EndpointOne");
+                    router = new InetSocketAddress("RouterOne", DEFAULT_PORT);
+                    application = new InetSocketAddress("EndpointTwo", DEFAULT_PORT);
+                    System.out.println("Source is EndpointOne");
                     packet.setSocketAddress(router);
                     socket.send(packet);
                     break;
                 case ENDPOINT_TWO: 
                     content = sendAck(packet, data);
-                    router = new InetSocketAddress("RouterThree", ROUTER_PORT);
-                    application = new InetSocketAddress("EndpointOne", packet.getPort());
-                    System.out.println("EndpointTwo");
+                    router = new InetSocketAddress("RouterThree", DEFAULT_PORT);
+                    application = new InetSocketAddress("EndpointOne",DEFAULT_PORT);
+                    System.out.println("Source is EndpointTwo");
                     packet.setSocketAddress(router);
                     socket.send(packet);
                     break;
                 case ROUTER_TWO:
                     content = sendAck(packet, data);
-                    System.out.println("RouterOne");
                     sendPacket(ENDPOINT_TWO, content, application);
                     socket.send(packet);
                     break;
                 case ROUTER_THREE:
                     content = sendAck(packet, data);
-                    System.out.println("RouterThree");
                     sendPacket(ENDPOINT_ONE, content, application);
                     break;
                 case ERROR:
@@ -85,7 +81,10 @@ public class ForwardingService extends Node {
 
     public synchronized void start() {
         try {
-            this.wait();
+            System.out.println("Starting Forwarding Service...");
+            while(true) {
+                this.wait();
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,7 +128,7 @@ public class ForwardingService extends Node {
 
     public static void main(String[] args) {
         try {
-            ForwardingService fs = new ForwardingService(SERVICE_PORT);
+            ForwardingService fs = new ForwardingService(DEFAULT_PORT);
             fs.start();
         } catch (Exception e) {
             e.printStackTrace();

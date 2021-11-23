@@ -4,8 +4,7 @@ import java.net.DatagramPacket;
 import java.net.InetSocketAddress;
 
 public class Application extends Node{
-    static final int APPLICATION_PORT = 50000;
-    static final int SERVICE_PORT = 51510;
+    static final int DEFAULT_PORT = 51510;
 
     static final int TYPE = 0;
     static final int LENGTH = 1;
@@ -13,13 +12,13 @@ public class Application extends Node{
 
     static final byte ENDPOINT_ONE = 0;
     static final byte ENDPOINT_TWO = 1;
-    static final byte ERROR = 5; //for now
+    static final byte ERROR = 7; //for now
     static final byte ACK = 6;
 
     static final int ACKCODE = 1;
     static final byte ACKPACKET = 10;
 
-    private InetSocketAddress forwardingService = new InetSocketAddress("ForwardingService", SERVICE_PORT);
+    private InetSocketAddress forwardingService = new InetSocketAddress("ForwardingService", DEFAULT_PORT);
     private String destination;
     private String message;
 
@@ -45,12 +44,12 @@ public class Application extends Node{
                     break;
                 case ENDPOINT_ONE:
                     message = sendAck(packet, data);
-                    System.out.println("Endpoint Two Says: " + message);
+                    System.out.println("Endpoint One Says: " + message);
                     start();
                     break;
                 case ENDPOINT_TWO:
                     message = sendAck(packet, data);
-                    System.out.println("Endpoint One Says: " + message);
+                    System.out.println("Endpoint Two Says: " + message);
                     start();
                     break;
                 default:
@@ -122,7 +121,7 @@ public class Application extends Node{
 
     public static void main(String[] args) {
         try {
-                Application app = new Application(APPLICATION_PORT);
+                Application app = new Application(DEFAULT_PORT);
                 app.start();
         } catch (Exception e) {
             e.printStackTrace();
