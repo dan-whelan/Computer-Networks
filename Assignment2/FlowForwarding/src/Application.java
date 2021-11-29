@@ -13,7 +13,7 @@ public class Application extends Node{
     static final byte ENDPOINT_ONE = 0;
     static final byte ENDPOINT_TWO = 1;
     static final byte ERROR = 7; //for now
-    static final byte ACK = 6;
+    static final byte ACK = 9;
 
     static final int ACKCODE = 1;
     static final byte ACKPACKET = 10;

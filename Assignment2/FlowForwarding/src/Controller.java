@@ -11,10 +11,10 @@ public class Controller extends Node{
     static final byte ENDPOINT_ONE = 0;
     static final byte ENDPOINT_TWO = 1;
     static final byte ERROR = 7; //for now
-    static final byte ACK = 6;
+    static final byte ACK = 9;
     static final byte CONTROLLER = 8;
 
-    static final int NUMBER_OF_ROUTERS = 3;
+    static final int NUMBER_OF_ROUTERS = 6;
     static final int NUMBER_OF_ENDPOINTS = 2;
     static final int INFO_TO_BE_STORED = 3;
     static final int DEST = 0;
@@ -23,6 +23,9 @@ public class Controller extends Node{
     static final int ROUTER_ONE = 0;
     static final int ROUTER_TWO = 1;
     static final int ROUTER_THREE = 2;
+    static final int ROUTER_FOUR = 3;
+    static final int ROUTER_FIVE = 4;
+    static final int ROUTER_SIX = 5;
 
     static final int ACKCODE = 1;
     static final byte ACKPACKET = 10;
@@ -50,18 +53,24 @@ public class Controller extends Node{
         forwardingTable[ROUTER_TWO][ENDPOINT_TWO][DEST] = ENDPOINT_ONE;
         forwardingTable[ROUTER_THREE][ENDPOINT_ONE][DEST] = ENDPOINT_TWO;
         forwardingTable[ROUTER_THREE][ENDPOINT_TWO][DEST] = ENDPOINT_ONE;
+        forwardingTable[ROUTER_FOUR][ENDPOINT_ONE][DEST] = ENDPOINT_TWO;
+        forwardingTable[ROUTER_FOUR][ENDPOINT_TWO][DEST] = ENDPOINT_ONE;
+        forwardingTable[ROUTER_FIVE][ENDPOINT_ONE][DEST] = ENDPOINT_TWO;
+        forwardingTable[ROUTER_FIVE][ENDPOINT_TWO][DEST] = ENDPOINT_ONE;
+        forwardingTable[ROUTER_SIX][ENDPOINT_ONE][DEST] = ENDPOINT_TWO;
+        forwardingTable[ROUTER_SIX][ENDPOINT_TWO][DEST] = ENDPOINT_ONE;
         forwardingTable[ROUTER_ONE][ENDPOINT_ONE][IN] = "ForwardingService";
-        forwardingTable[ROUTER_ONE][ENDPOINT_ONE][OUT] = "RouterTwo";
-        forwardingTable[ROUTER_ONE][ENDPOINT_TWO][IN] = "RouterTwo";
-        forwardingTable[ROUTER_ONE][ENDPOINT_TWO][OUT] = "ForwardingService";
-        forwardingTable[ROUTER_TWO][ENDPOINT_ONE][IN] = "RouterOne";
-        forwardingTable[ROUTER_TWO][ENDPOINT_ONE][OUT] = "RouterThree";
-        forwardingTable[ROUTER_TWO][ENDPOINT_TWO][IN] = "RouterThree";
-        forwardingTable[ROUTER_TWO][ENDPOINT_TWO][OUT] = "RouterOne";
-        forwardingTable[ROUTER_THREE][ENDPOINT_ONE][IN] = "RouterTwo";
-        forwardingTable[ROUTER_THREE][ENDPOINT_ONE][OUT] = "ForwardingService";
-        forwardingTable[ROUTER_THREE][ENDPOINT_TWO][IN] = "ForwardingService";
-        forwardingTable[ROUTER_THREE][ENDPOINT_TWO][OUT] = "RouterTwo";
+        forwardingTable[ROUTER_ONE][ENDPOINT_ONE][OUT] = "RouterThree";
+        forwardingTable[ROUTER_TWO][ENDPOINT_TWO][IN] = "ForwardingService";
+        forwardingTable[ROUTER_TWO][ENDPOINT_TWO][OUT] = "RouterFour";
+        forwardingTable[ROUTER_THREE][ENDPOINT_ONE][IN] = "RouterOne";
+        forwardingTable[ROUTER_THREE][ENDPOINT_ONE][OUT] = "RouterFive";
+        forwardingTable[ROUTER_FOUR][ENDPOINT_TWO][IN] = "RouterTwo";
+        forwardingTable[ROUTER_FOUR][ENDPOINT_TWO][OUT] = "RouterSix";
+        forwardingTable[ROUTER_FIVE][ENDPOINT_ONE][IN] = "RouterThree";
+        forwardingTable[ROUTER_FIVE][ENDPOINT_ONE][OUT] = "ForwardingService";
+        forwardingTable[ROUTER_SIX][ENDPOINT_TWO][IN] = "RouterFour";
+        forwardingTable[ROUTER_SIX][ENDPOINT_TWO][OUT] = "ForwardingService";
     }
 
     private static void initialiseAddressTable() {
@@ -69,6 +78,9 @@ public class Controller extends Node{
         addressTable[ROUTER_ONE] = new InetSocketAddress("RouterOne", DEFAULT_PORT);
         addressTable[ROUTER_TWO] = new InetSocketAddress("RouterTwo", DEFAULT_PORT);
         addressTable[ROUTER_THREE] = new InetSocketAddress("RouterThree", DEFAULT_PORT);
+        addressTable[ROUTER_FOUR] = new InetSocketAddress("RouterFour", DEFAULT_PORT);
+        addressTable[ROUTER_FIVE] = new InetSocketAddress("RouterFive", DEFAULT_PORT);
+        addressTable[ROUTER_SIX] = new InetSocketAddress("RouterSix", DEFAULT_PORT);
     }
 
     public synchronized void onReceipt(DatagramPacket packet) {
@@ -93,6 +105,21 @@ public class Controller extends Node{
                     content = sendAck(packet, data);
                     address = (String) forwardingTable[ROUTER_THREE][Integer.parseInt(content)][OUT];
                     sendPacket(CONTROLLER, address, addressTable[ROUTER_THREE]);
+                    break;
+                case ROUTER_FOUR:
+                    content = sendAck(packet, data);
+                    address = (String) forwardingTable[ROUTER_FOUR][Integer.parseInt(content)][OUT];
+                    sendPacket(CONTROLLER, address, addressTable[ROUTER_FOUR]);
+                    break;
+                case ROUTER_FIVE:
+                    content = sendAck(packet, data);
+                    address = (String) forwardingTable[ROUTER_FIVE][Integer.parseInt(content)][OUT];
+                    sendPacket(CONTROLLER, address, addressTable[ROUTER_FIVE]);
+                    break;
+                case ROUTER_SIX:
+                    content = sendAck(packet, data);
+                    address = (String) forwardingTable[ROUTER_SIX][Integer.parseInt(content)][OUT];
+                    sendPacket(CONTROLLER, address, addressTable[ROUTER_SIX]);
                     break;
                 default:
                     System.out.println("Error: Unexpected Packet Receieved");

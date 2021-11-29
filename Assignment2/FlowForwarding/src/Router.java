@@ -13,7 +13,7 @@ public class Router extends Node {
     static final byte ENDPOINT_ONE = 0;
     static final byte ENDPOINT_TWO = 1;
     static final byte ERROR = 7; //for now
-    static final byte ACK = 6;
+    static final byte ACK = 9;
     static final byte CONTROLLER = 8;
 
     static final int NUMBER_OF_ENDPOINTS = 2;
@@ -23,6 +23,9 @@ public class Router extends Node {
     static final int ROUTER_ONE = 1;
     static final int ROUTER_TWO = 2;
     static final int ROUTER_THREE = 3;
+    static final int ROUTER_FOUR = 4;
+    static final int ROUTER_FIVE = 5;
+    static final int ROUTER_SIX = 6;
 
     static final int ACKCODE = 1;
     static final byte ACKPACKET = 10;
@@ -63,8 +66,8 @@ public class Router extends Node {
                         sendPacket((byte)(routerNumber-1), message, controllerAddress);
                     }
                     else {
-                        if(routerNumber == ROUTER_THREE) {
-                            sendPacket((byte) ROUTER_TWO, content, (new InetSocketAddress(addressTable[ENDPOINT_ONE], DEFAULT_PORT)));
+                        if(routerNumber == ROUTER_FIVE) {
+                            sendPacket((byte) ROUTER_FIVE, content, (new InetSocketAddress(addressTable[ENDPOINT_ONE], DEFAULT_PORT)));
                         }
                         else {
                             sendPacket(ENDPOINT_ONE, content, (new InetSocketAddress(addressTable[ENDPOINT_ONE], DEFAULT_PORT)));
@@ -81,8 +84,8 @@ public class Router extends Node {
                         sendPacket((byte)(routerNumber-1), message, controllerAddress);
                     }
                     else {
-                        if(routerNumber == ROUTER_ONE) {
-                            sendPacket((byte) ROUTER_THREE, content, (new InetSocketAddress(addressTable[ENDPOINT_TWO], DEFAULT_PORT)));
+                        if(routerNumber == ROUTER_SIX) {
+                            sendPacket((byte) ROUTER_SIX, content, (new InetSocketAddress(addressTable[ENDPOINT_TWO], DEFAULT_PORT)));
                         }
                         else {
                             sendPacket(ENDPOINT_ONE, content, (new InetSocketAddress(addressTable[ENDPOINT_TWO], DEFAULT_PORT)));
@@ -95,29 +98,25 @@ public class Router extends Node {
                     break;
                 case CONTROLLER:
                     if(temp[TYPE] == ENDPOINT_ONE) {
-                        if(routerNumber == ROUTER_THREE) {
+                        if(routerNumber == ROUTER_FIVE) {
                             content = sendAck(packet, data);
-                            System.out.println(content);
                             updateAddressTable(content, ENDPOINT_ONE);
-                            sendPacket((byte) ROUTER_THREE, tempContent, (new InetSocketAddress(addressTable[ENDPOINT_ONE], DEFAULT_PORT)));
+                            sendPacket((byte) ROUTER_FIVE, tempContent, (new InetSocketAddress(addressTable[ENDPOINT_ONE], DEFAULT_PORT)));
                         }
                         else {
                             content = sendAck(packet, data);
-                            System.out.println(content);
                             updateAddressTable(content, ENDPOINT_ONE);
                             sendPacket(ENDPOINT_ONE, tempContent, (new InetSocketAddress(addressTable[ENDPOINT_ONE], DEFAULT_PORT)));
                         }
                     }
                     else if(temp[TYPE] == ENDPOINT_TWO) {
-                        if(routerNumber == ROUTER_ONE) {
+                        if(routerNumber == ROUTER_SIX) {
                             content = sendAck(packet, data);
-                            System.out.println(content);
                             updateAddressTable(content, ENDPOINT_TWO);
-                            sendPacket((byte) ROUTER_TWO, tempContent, (new InetSocketAddress(addressTable[ENDPOINT_TWO], DEFAULT_PORT)));
+                            sendPacket((byte) ROUTER_SIX, tempContent, (new InetSocketAddress(addressTable[ENDPOINT_TWO], DEFAULT_PORT)));
                         }
                         else {
                             content = sendAck(packet, data);
-                            System.out.println(content);
                             updateAddressTable(content, ENDPOINT_TWO);
                             sendPacket(ENDPOINT_TWO, tempContent, (new InetSocketAddress(addressTable[ENDPOINT_TWO], DEFAULT_PORT)));
                         }

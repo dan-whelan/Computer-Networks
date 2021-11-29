@@ -11,11 +11,10 @@ public class ForwardingService extends Node {
 
     static final byte ENDPOINT_ONE = 0;
     static final byte ENDPOINT_TWO = 1; 
-    static final byte ROUTER_ONE = 1;
-    static final byte ROUTER_TWO = 2;
-    static final byte ROUTER_THREE = 3;
+    static final byte ROUTER_FIVE = 5;
+    static final byte ROUTER_SIX = 6;
     static final byte ERROR = 7; //for now
-    static final byte ACK = 6;
+    static final byte ACK = 9;
 
     static final int ACKCODE = 1;
     static final byte ACKPACKET = 10;
@@ -51,20 +50,19 @@ public class ForwardingService extends Node {
                     break;
                 case ENDPOINT_TWO: 
                     content = sendAck(packet, data);
-                    router = new InetSocketAddress("RouterThree", DEFAULT_PORT);
+                    router = new InetSocketAddress("RouterTwo", DEFAULT_PORT);
                     application = new InetSocketAddress("EndpointOne",DEFAULT_PORT);
                     System.out.println("Source is EndpointTwo");
                     packet.setSocketAddress(router);
                     socket.send(packet);
                     break;
-                case ROUTER_TWO:
-                    content = sendAck(packet, data);
-                    sendPacket(ENDPOINT_TWO, content, application);
-                    socket.send(packet);
-                    break;
-                case ROUTER_THREE:
+                case ROUTER_FIVE:
                     content = sendAck(packet, data);
                     sendPacket(ENDPOINT_ONE, content, application);
+                    break;
+                case ROUTER_SIX:
+                    content = sendAck(packet, data);
+                    sendPacket(ENDPOINT_TWO, content, application);
                     break;
                 case ERROR:
                     content = sendAck(packet, data);
