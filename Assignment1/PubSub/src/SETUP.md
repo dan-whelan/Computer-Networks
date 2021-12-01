@@ -41,7 +41,7 @@ java -cp . Client
 
 >To Set Up Wireshark
 >terminal 1
-## taken from stack overflow "https://stackoverflow.com/questions/61232668/runing-openmodelica-gui-from-docker-causes-could-not-connect-to-any-x-display"
+/*/taken from stack overflow "https://stackoverflow.com/questions/61232668/runing-openmodelica-gui-from-docker-causes-could-not-connect-to-any-x-display"
 docker-machine env default
 eval $(docker-machine env default)
 IP=$(ifconfig en0 | grep inet | awk '$1=="inet" {print $2}')

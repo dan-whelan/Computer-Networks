@@ -69,9 +69,9 @@ public class Application extends Node{
             DatagramPacket packet;
             Scanner input = new Scanner(System.in);
             input.useDelimiter("\n");
-            System.out.println("Please enter destination of packet >");
+            System.out.println("Please enter destination of packet (EndpointOne or EndpointTwo) >");
             destination = input.next();
-            System.out.println("Please enter message to send >");
+            System.out.println("Please enter message to send (Hit Return Key Twice After Input) >");
             message = input.next();
             data = new byte[HEADER_LENGTH + message.length()];
             if(destination.equalsIgnoreCase("endpoint1") || destination.equalsIgnoreCase("endpointone")) {
